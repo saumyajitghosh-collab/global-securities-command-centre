@@ -25,7 +25,14 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
 .hero::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 30% 20%,rgba(192,138,45,.08) 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(44,122,116,.06) 0%,transparent 50%);pointer-events:none}
 .hero .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
 .hero h1{font-family:'Fraunces',serif;font-weight:400;font-size:48px;line-height:1.15;color:#fff;max-width:900px;margin-bottom:14px}
-.hero .sub{font-size:17px;color:#9FB0C4;max-width:700px;margin-bottom:36px;line-height:1.6}
+.hero .sub{font-size:17px;color:#9FB0C4;max-width:700px;margin-bottom:30px;line-height:1.6}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:22px}
+.btn-main{display:inline-block;background:linear-gradient(135deg,#C08A2D,#A87424);color:#fff;font-family:'Public Sans',sans-serif;font-weight:700;font-size:16px;padding:15px 34px;border-radius:11px;text-decoration:none;box-shadow:0 10px 30px rgba(192,138,45,.35);transition:all .2s}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(192,138,45,.5)}
+.btn-sub{display:inline-block;background:transparent;color:#C6D2E0;font-family:'Public Sans',sans-serif;font-weight:600;font-size:15px;padding:15px 28px;border-radius:11px;text-decoration:none;border:1px solid rgba(198,210,224,.25);transition:all .2s}
+.btn-sub:hover{border-color:var(--gold);color:#fff}
+.hero .trial-note{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8FA1B6;text-transform:uppercase;margin-bottom:44px}
+.hero .trial-note b{color:#E3B45C}
 .hero .stats{display:flex;gap:32px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
 .hero .stat{text-align:center}
 .hero .stat .v{font-family:'Fraunces',serif;font-size:36px;font-weight:600;color:var(--gold);line-height:1.1}
@@ -33,10 +40,21 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
 .hero .scroll-hint{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:#5B7089;text-transform:uppercase;margin-top:auto;position:absolute;bottom:24px}
 .hero .scroll-hint::after{content:" ↓";color:var(--gold)}
 
-.modules{padding:60px 24px 80px;max-width:1200px;margin:0 auto}
+.modules{padding:60px 24px 40px;max-width:1200px;margin:0 auto}
 .modules .section-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;text-align:center}
 .modules h2{font-family:'Fraunces',serif;font-weight:400;font-size:32px;color:var(--ink);text-align:center;margin-bottom:8px}
 .modules .lede{text-align:center;font-size:15px;color:var(--muted);max-width:680px;margin:0 auto 40px}
+
+.exec-card{display:block;background:var(--ink);border-radius:16px;padding:34px 38px;margin-bottom:22px;text-decoration:none;color:#C6D2E0;border:1px solid var(--ink);position:relative;overflow:hidden;transition:all .2s}
+.exec-card:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(14,27,44,.28)}
+.exec-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--teal))}
+.exec-card .ec-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.exec-card h3{font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:#fff;margin-bottom:8px}
+.exec-card p{font-size:14px;color:#8FA1B6;max-width:760px;margin-bottom:14px}
+.exec-card .ec-chips{display:flex;flex-wrap:wrap;gap:8px}
+.exec-card .ec-chips span{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em;padding:4px 10px;border-radius:4px;background:rgba(255,255,255,.06);color:#9FB0C4;border:1px solid rgba(255,255,255,.08)}
+.exec-card .ec-go{position:absolute;right:34px;bottom:30px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
+.exec-card .ec-go::after{content:" →"}
 
 .module-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
 .module-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;cursor:pointer;transition:all .2s;text-decoration:none;color:inherit;display:flex;flex-direction:column}
@@ -64,16 +82,40 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
 .tag.assess{background:var(--gold-soft);color:#8A6420}
 .tag.gap{background:var(--danger-soft);color:var(--danger)}
 
+/* Pricing */
+.pricing{padding:70px 24px;background:var(--ink)}
+.pricing .section-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;text-align:center}
+.pricing h2{font-family:'Fraunces',serif;font-weight:400;font-size:32px;color:#fff;text-align:center;margin-bottom:10px}
+.pricing .lede{text-align:center;font-size:15px;color:#8FA1B6;max-width:640px;margin:0 auto 44px}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1020px;margin:0 auto}
+.plan{background:var(--ink2);border:1px solid rgba(198,210,224,.13);border-radius:16px;padding:30px 28px;position:relative;transition:all .2s}
+.plan.featured{border-color:rgba(192,138,45,.55);box-shadow:0 0 0 1px rgba(192,138,45,.3), 0 20px 60px rgba(0,0,0,.35)}
+.plan .p-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gold);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:4px 14px;border-radius:20px;white-space:nowrap}
+.plan .p-name{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9FB0C4;margin-bottom:10px}
+.plan .p-price{font-family:'Fraunces',serif;font-size:34px;color:#fff;font-weight:600}
+.plan .p-price small{font-family:'Public Sans',sans-serif;font-size:13px;color:#8FA1B6;font-weight:400}
+.plan .p-save{font-size:12px;color:#E3B45C;font-family:'IBM Plex Mono',monospace;margin:2px 0 14px}
+.plan ul{list-style:none;margin:14px 0 22px}
+.plan li{font-size:13px;color:#C6D2E0;padding:6px 0 6px 22px;position:relative;border-bottom:1px solid rgba(198,210,224,.08)}
+.plan li::before{content:"✓";position:absolute;left:0;color:var(--gold)}
+.plan .p-btn{display:block;text-align:center;background:linear-gradient(135deg,#C08A2D,#A87424);color:#fff;font-weight:700;font-size:14px;padding:12px;border-radius:9px;text-decoration:none;transition:all .2s}
+.plan .p-btn:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(192,138,45,.4)}
+.plan .p-btn.ghost{background:transparent;border:1px solid rgba(198,210,224,.25);color:#C6D2E0;box-shadow:none}
+.pricing .p-note{text-align:center;font-size:12px;color:#5B7089;margin-top:28px;line-height:1.8}
+
+.how{padding:60px 24px;max-width:900px;margin:0 auto;text-align:center}
+.how h2{font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--ink);margin-bottom:26px}
+.how .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.how .step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px 18px}
+.how .step .num{font-family:'Fraunces',serif;font-size:30px;color:var(--gold);font-weight:600}
+.how .step h4{font-size:15px;color:var(--ink);margin:8px 0 6px}
+.how .step p{font-size:12.5px;color:var(--muted)}
+
 .footer{background:var(--ink);color:#6E8098;padding:40px 24px;text-align:center;font-size:12px;line-height:1.7}
 .footer b{color:var(--gold)}
 .footer .tag{margin:0 2px}
 
-@media(max-width:860px){
-  .module-grid{grid-template-columns:1fr}
-  .hero h1{font-size:34px}
-  .hero .stats{gap:20px}
-  .hero .stat .v{font-size:28px}
-}
+@media(max-width:920px){.module-grid{grid-template-columns:1fr}.plans{grid-template-columns:1fr;max-width:440px}.how .steps{grid-template-columns:1fr}.hero h1{font-size:34px}.hero .stats{gap:20px}.hero .stat .v{font-size:28px}.exec-card{padding:26px 22px}.exec-card .ec-go{position:static;margin-top:12px;display:inline-block}}
 </style>
 </head>
 <body>
@@ -81,18 +123,38 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
 <div class="hero">
   <div class="eyebrow">Global Securities Services · Sales Command Centre</div>
   <h1>Sell into the infrastructure transition — across four regions.</h1>
-  <div class="sub">Interactive competitive intelligence and GTM knowledge base for custody, fund administration, transfer agency and digital-asset servicing. Four regional modules covering 30+ markets, 80+ competitors, and the regulatory rails reshaping where mandates move.</div>
+  <div class="sub">Interactive competitive intelligence for custody, fund administration, transfer agency and digital-asset servicing. Four regional modules plus the Executive View — market sizing, mandate triggers, cross-region analytics and a sequenced 12-month coverage plan.</div>
+  <div class="cta-row">
+    <a class="btn-main" id="cta-main" href="login.html">Start your free month →</a>
+    <a class="btn-sub" id="cta-sub" href="#pricing">See pricing</a>
+  </div>
+  <div class="trial-note">First month free · No card required · <b>UPI-friendly</b></div>
   <div class="stats">
-    <div class="stat"><div class="v">4</div><div class="l">REGIONS</div></div>
+    <div class="stat"><div class="v">7</div><div class="l">MODULES</div></div>
     <div class="stat"><div class="v">30+</div><div class="l">MARKETS</div></div>
     <div class="stat"><div class="v">80+</div><div class="l">COMPETITORS</div></div>
     <div class="stat"><div class="v">$180T</div><div class="l">GLOBAL AUC/A (TOP 4)</div></div>
+    <div class="stat"><div class="v">14</div><div class="l">MANDATE TRIGGERS</div></div>
   </div>
-  <div class="scroll-hint">Select a region below</div>
+  <div class="scroll-hint">Explore below</div>
 </div>
 
 <div class="modules">
-  <div class="section-label">Regional Modules</div>
+  <div class="section-label">Start Here</div>
+  <h2>The Executive View.</h2>
+  <p class="lede">Every module synthesised at leadership altitude — built for the 90-second scan before the conversation that matters.</p>
+
+  <a class="exec-card" href="executive-view.html">
+    <div class="ec-eyebrow">Synthesis Layer · All Regions</div>
+    <h3>The Executive View — Global Analysis & Decision Support</h3>
+    <p>A live allocation model across five theatres, fourteen mandate triggers ranked by status, the cross-region comparison matrix, and the sequenced 6–12 month approach. Plus the convergence thesis and pre-answered board questions — the one page a leadership team actually scans.</p>
+    <div class="ec-chips">
+      <span>SALES ALLOCATION MODEL</span><span>MANDATE TRIGGERS</span><span>CROSS-REGION MATRIX</span><span>12-MONTH APPROACH</span><span>BOARD Q&A</span>
+    </div>
+    <span class="ec-go">Open</span>
+  </a>
+
+  <div class="section-label" style="margin-top:44px">Regional Modules</div>
   <h2>Choose your theatre.</h2>
   <p class="lede">Each module is a standalone knowledge base — market sizing, custody landscape, regulatory radar, competitive intelligence, buyer maps, and six ready-to-deploy sales plays. Data labelled <span class="tag fact">FACT</span> / <span class="tag calc">CALCULATED</span> / <span class="tag assess">ASSESSMENT</span> / <span class="tag gap">DATA GAP</span> throughout.</p>
 
@@ -103,8 +165,8 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
         <div class="mc-flag">🇮🇳</div>
         <div class="mc-eyebrow">APAC · India Briefing</div>
         <div class="mc-title">India Asset-Servicing Market Briefing</div>
-        <div class="mc-desc">FPI custody, fund services, AIF servicing, insurance & NPS, GIFT IFSC. The fastest-growing large market for asset servicing.</div>
-        <div class="mc-meta"><span>₹85.76L Cr MF AUM</span><span>12,243 FPIs</span><span>₹16.94L Cr AIF</span></div>
+        <div class="mc-desc">FPI custody, fund services, AIF servicing, SIF derivatives triggers, insurance & NPS, GIFT IFSC. The fastest-growing large market for asset servicing.</div>
+        <div class="mc-meta"><span>₹85.76L Cr MF AUM</span><span>₹16.94L Cr AIF</span><span>SIF ₹31,175 Cr</span></div>
       </div>
       <div class="mc-footer">
         <div class="mc-stat">14 sections · <b>Mar–Sep 2026</b></div>
@@ -118,7 +180,7 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
         <div class="mc-eyebrow">APAC · Knowledge Base</div>
         <div class="mc-title">APAC Asset-Servicing Competitive Intelligence & GTM</div>
         <div class="mc-desc">8 markets, 20+ competitors profiled, buyer maps, sector plays. The regional overview spanning India, China, Japan, Korea, ASEAN, Australia.</div>
-        <div class="mc-meta"><span>8 markets</span><span>20+ competitors</span><span>13 sections</span></div>
+        <div class="mc-meta"><span>8 markets</span><span>20+ competitors</span><span>$23.8T AUM</span></div>
       </div>
       <div class="mc-footer">
         <div class="mc-stat">Prepared <b>Sep 2026</b></div>
@@ -185,11 +247,89 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
   </div>
 </div>
 
+<div class="how">
+  <h2>How it works</h2>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h4>Create your account</h4><p>Pick a user ID and password — takes 30 seconds, no card details.</p></div>
+    <div class="step"><div class="num">2</div><h4>First month free</h4><p>Full access to all 7 modules, the Executive View and every future update.</p></div>
+    <div class="step"><div class="num">3</div><h4>Subscribe by UPI</h4><p>After your free month, pay by any UPI app — monthly or yearly (2 months free).</p></div>
+  </div>
+</div>
+
+<div class="pricing" id="pricing">
+  <div class="section-label">Pricing</div>
+  <h2>One product. Three plans.</h2>
+  <p class="lede">Priced against niche B2B intelligence products (tokenisation and custody research services at $40–80/month), not against terminals. Cancel anytime.</p>
+  <div class="plans">
+    <div class="plan">
+      <div class="p-name">Professional · Monthly</div>
+      <div class="p-price">₹2,999 <small>/ month</small></div>
+      <div class="p-save">≈ $36 · billed monthly</div>
+      <ul>
+        <li>All 7 regional & thematic modules</li>
+        <li>The Executive View & allocation model</li>
+        <li>Mandate-trigger dashboard</li>
+        <li>Data-labelling discipline (FACT / CALCULATED / ASSESSMENT)</li>
+      </ul>
+      <a class="p-btn ghost" href="login.html">Start free month</a>
+    </div>
+    <div class="plan featured">
+      <div class="p-badge">2 months free · Save 17%</div>
+      <div class="p-name">Professional · Yearly</div>
+      <div class="p-price">₹29,999 <small>/ year</small></div>
+      <div class="p-save">≈ ₹2,500/month · best value</div>
+      <ul>
+        <li>Everything in Monthly</li>
+        <li>All data refreshes & new modules included</li>
+        <li>Priority request line for research questions</li>
+        <li>Early access to new analytical tools</li>
+      </ul>
+      <a class="p-btn" href="login.html">Start free month</a>
+    </div>
+    <div class="plan">
+      <div class="p-name">Team · 5 seats</div>
+      <div class="p-price">₹11,999 <small>/ month</small></div>
+      <div class="p-save">Yearly ₹1,19,999 · save 17%</div>
+      <ul>
+        <li>Everything in Professional, for 5 users</li>
+        <li>Desk-level mandate tracking</li>
+        <li>Shared trigger watchlist</li>
+        <li>Quarterly market brief (PDF)</li>
+      </ul>
+      <a class="p-btn ghost" href="login.html">Start free month</a>
+    </div>
+  </div>
+  <div class="p-note">First month free on every plan · Payment by UPI (any app) · Single-user research licence<br>Benchmarks: Tokenization Insight £39.99/mo · MarketOntology Professional $399/mo · niche custody intelligence newsletters $25–50/mo</div>
+</div>
+
 <div class="footer">
   <b>Global Securities Services Sales Command Centre</b> · Interactive competitive intelligence for custody, fund administration, transfer agency and digital-asset servicing<br>
-  4 regions · 30+ markets · 80+ competitors profiled · Prepared Sep 2026<br>
+  7 modules · 4 regions · 30+ markets · 80+ competitors profiled · Prepared Sep 2026<br>
   All <span class="tag assess">ASSESSMENT</span> items are analyst judgement, not sourced data · Refresh <span class="tag fact">FACT</span> items before client use
 </div>
+
+<script>
+/* Auth-aware hero CTA: signed-in users go straight in */
+(function(){
+  try{
+    var s=JSON.parse(localStorage.getItem('gscc_session')||'null');
+    var users=JSON.parse(localStorage.getItem('gscc_users')||'{}');
+    var now=Date.now();
+    if(s&&s.sessionExpires>now&&users[s.uid]&&users[s.uid].planExpires>now){
+      var main=document.getElementById('cta-main');
+      main.textContent='Enter the Command Centre →';
+      main.href='executive-view.html';
+      var sub=document.getElementById('cta-sub');
+      sub.textContent='View pricing';
+      var note=document.querySelector('.hero .trial-note');
+      if(note){
+        var days=Math.ceil((users[s.uid].planExpires-now)/86400000);
+        note.innerHTML=(users[s.uid].plan==='trial'?'Free trial · <b>'+days+' days left</b>':'Subscription active · <b>'+days+' days left</b>');
+      }
+    }
+  }catch(e){}
+})();
+</script>
 
 </body>
 </html>
