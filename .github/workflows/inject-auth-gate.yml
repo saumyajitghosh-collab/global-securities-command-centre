@@ -1,0 +1,30 @@
+name: Inject auth gate into modules
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  inject:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inject gate script tag
+        run: |
+          python3 - << 'EOF'
+          files = ['india-asset-servicing-briefing.html','apac-asset-servicing-kb.html','europe-asset-servicing-kb.html','middle-east-asset-servicing-kb.html','north-america-asset-servicing-kb.html','new-rails-dlt-ai-apac.html']
+          for f in files:
+              c = open(f, encoding='utf-8').read()
+              if 'auth-gate.js' in c:
+                  print(f'{f}: already gated')
+                  continue
+              c2 = c.replace('<head>', '<head>\n<script src="auth-gate.js"></script>', 1)
+              assert c2 != c, 'no head tag found in ' + f
+              open(f, 'w', encoding='utf-8').write(c2)
+              print(f'{f}: injected')
+          EOF
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "No changes needed"; else git commit -m "Add auth gate to all regional modules"; git push; fi
