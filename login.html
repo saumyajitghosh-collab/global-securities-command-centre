@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — Global Securities Command Centre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E1B2C; --ink2:#16283F; --ink3:#1E344F;
+  --gold:#C08A2D; --gold-bright:#E3B45C;
+  --teal:#2C7A74; --teal-bright:#4FB3AB;
+  --violet:#5B4A8A;
+  --line:rgba(198,210,224,.14);
+  --muted:#8FA1B6; --text:#C6D2E0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:'Public Sans',sans-serif;background:var(--ink);color:var(--text);font-size:15px;line-height:1.6;overflow:hidden}
+#bg{position:fixed;inset:0;z-index:0}
+.glow{position:fixed;border-radius:50%;filter:blur(120px);opacity:.5;z-index:1;pointer-events:none;animation:drift 18s ease-in-out infinite alternate}
+.glow.g1{width:520px;height:520px;background:rgba(192,138,45,.14);top:-160px;left:-120px}
+.glow.g2{width:620px;height:620px;background:rgba(44,122,116,.12);bottom:-220px;right:-160px;animation-delay:-9s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.12)}}
+
+.stage{position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
+.card{width:100%;max-width:460px;background:rgba(22,40,63,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:18px;padding:38px 36px 30px;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:cardIn .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
+
+.brand{text-align:center;margin-bottom:26px}
+.mono{width:58px;height:58px;margin:0 auto 14px;border-radius:14px;background:linear-gradient(135deg,var(--gold) 0%,#9A6E20 100%);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:600;font-size:20px;color:#fff;letter-spacing:.02em;box-shadow:0 8px 24px rgba(192,138,45,.35);position:relative;overflow:hidden}
+.mono::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);transform:translateX(-120%);animation:sheen 3.6s ease-in-out infinite}
+@keyframes sheen{0%,60%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.brand h1{font-family:'Fraunces',serif;font-weight:400;font-size:23px;color:#fff;line-height:1.25}
+.brand .sub{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:7px}
+
+.tabs{display:flex;background:rgba(14,27,44,.6);border-radius:10px;padding:4px;margin-bottom:24px}
+.tabs button{flex:1;border:0;background:transparent;color:var(--muted);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:600;padding:9px 12px;border-radius:8px;cursor:pointer;transition:all .2s}
+.tabs button.on{background:var(--gold);color:#fff;box-shadow:0 4px 14px rgba(192,138,45,.4)}
+.tabs button:not(.on):hover{color:var(--text)}
+
+label{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
+input{width:100%;background:rgba(14,27,44,.65);border:1px solid var(--line);border-radius:9px;color:#fff;font-family:'Public Sans',sans-serif;font-size:14.5px;padding:11px 14px;outline:none;transition:border .2s, box-shadow .2s}
+input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(192,138,45,.15)}
+input::placeholder{color:#5B7089}
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:44px}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--muted);cursor:pointer;font-size:16px;padding:6px}
+.strength{height:3px;border-radius:2px;background:rgba(255,255,255,.08);margin-top:7px;overflow:hidden}
+.strength i{display:block;height:100%;width:0;background:var(--danger);border-radius:2px;transition:all .3s}
+.strength i.mid{background:var(--gold-bright)}
+.strength i.good{background:var(--teal-bright)}
+
+.btn{width:100%;border:0;border-radius:10px;background:linear-gradient(135deg,var(--gold),#A87424);color:#fff;font-family:'Public Sans',sans-serif;font-size:15px;font-weight:700;padding:13px;cursor:pointer;margin-top:22px;transition:all .2s;box-shadow:0 8px 24px rgba(192,138,45,.3)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(192,138,45,.45)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;border:1px solid var(--line);box-shadow:none;color:var(--text)}
+.btn.ghost:hover{border-color:var(--gold)}
+
+.msg{display:none;border-radius:9px;padding:10px 14px;font-size:13px;margin-top:14px}
+.msg.err{display:block;background:rgba(163,70,46,.18);border:1px solid rgba(163,70,46,.4);color:#E8A28E}
+.msg.ok{display:block;background:rgba(44,122,116,.18);border:1px solid rgba(79,179,171,.35);color:#7FD6CF}
+
+.trial-box{margin-top:20px;background:rgba(192,138,45,.1);border:1px solid rgba(192,138,45,.3);border-radius:10px;padding:14px 16px}
+.trial-box .tb-head{display:flex;justify-content:space-between;align-items:baseline;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-bright)}
+.trial-box .tb-days{font-family:'Fraunces',serif;font-size:24px;color:#fff}
+.trial-bar{height:5px;border-radius:3px;background:rgba(255,255,255,.09);margin-top:9px;overflow:hidden}
+.trial-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal-bright),var(--gold-bright));border-radius:3px;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.trial-box .tb-note{font-size:11.5px;color:var(--muted);margin-top:8px}
+
+/* Payment view */
+.plan-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0 6px}
+.plan{border:1.5px solid var(--line);border-radius:12px;padding:16px 18px;cursor:pointer;position:relative;transition:all .2s;background:rgba(14,27,44,.4)}
+.plan:hover{border-color:rgba(192,138,45,.55)}
+.plan.sel{border-color:var(--gold);background:rgba(192,138,45,.08);box-shadow:0 0 0 3px rgba(192,138,45,.12)}
+.plan .p-name{font-family:'Fraunces',serif;font-size:17px;color:#fff;font-weight:600}
+.plan .p-price{font-family:'Fraunces',serif;font-size:22px;color:var(--gold-bright);margin-top:2px}
+.plan .p-price small{font-size:12px;color:var(--muted);font-family:'Public Sans',sans-serif}
+.plan .p-note{font-size:11.5px;color:var(--muted);margin-top:4px}
+.plan .badge{position:absolute;top:-9px;right:12px;background:var(--teal);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;padding:3px 9px;border-radius:4px;text-transform:uppercase}
+.qr-zone{display:flex;gap:20px;align-items:center;background:rgba(14,27,44,.5);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:8px}
+.qr-zone img{width:132px;height:132px;border-radius:10px;background:#fff;padding:8px;flex-shrink:0}
+.qr-zone .qr-side{font-size:12.5px;color:var(--muted);line-height:1.65}
+.qr-side b{color:var(--text)}
+.upi-id{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gold-bright);background:rgba(14,27,44,.7);border:1px dashed rgba(192,138,45,.5);border-radius:8px;padding:8px 12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.upi-id:hover{border-style:solid}
+.copy-hint{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+
+.view{display:none}
+.view.on{display:block;animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.foot{text-align:center;margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:#5B7089;line-height:1.7}
+.foot b{color:var(--muted)}
+
+.settings-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.settings-row .sr-l{color:var(--text)}
+.settings-row .sr-l small{display:block;color:var(--muted);font-size:11px}
+.link-btn{background:none;border:0;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;cursor:pointer;text-transform:uppercase}
+.link-btn:hover{color:var(--gold-bright)}
+a{color:var(--gold);text-decoration:none}
+@media(max-width:520px){.card{padding:28px 22px 22px}.qr-zone{flex-direction:column;text-align:center}.qr-zone .upi-id{flex-direction:column;gap:4px}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="glow g1"></div><div class="glow g2"></div>
+
+<div class="stage">
+<div class="card">
+  <div class="brand">
+    <div class="mono">GSCC</div>
+    <h1>Global Securities<br>Command Centre</h1>
+    <div class="sub">Executive Intelligence · Custody · Fund Services · New Rails</div>
+  </div>
+
+  <!-- ============ WELCOME (has valid session) ============ -->
+  <div class="view" id="v-welcome">
+    <div class="msg ok" id="w-status" style="margin:0 0 4px"></div>
+    <div class="trial-box" id="w-trial"></div>
+    <button class="btn" id="w-enter">Enter the Command Centre →</button>
+    <div style="display:flex;gap:10px;margin-top:10px">
+      <button class="btn ghost" style="margin-top:0" id="w-settings">Account settings</button>
+      <button class="btn ghost" style="margin-top:0" id="w-logout">Sign out</button>
+    </div>
+  </div>
+
+  <!-- ============ SIGN IN ============ -->
+  <div class="view" id="v-signin">
+    <div class="tabs"><button class="on" id="t-signin">Sign in</button><button id="t-create">Create account</button></div>
+    <label for="si-uid">User ID</label>
+    <input id="si-uid" autocomplete="username" placeholder="your user id">
+    <label for="si-pw">Password</label>
+    <div class="pw-wrap"><input id="si-pw" type="password" autocomplete="current-password" placeholder="••••••••"><button class="eye" data-eye="si-pw" tabindex="-1">👁</button></div>
+    <div class="msg err" id="si-msg"></div>
+    <button class="btn" id="si-go">Sign in</button>
+    <div class="foot">First visit? <a href="#" id="si-tocreate">Create your free account</a> — first month free, no card required.</div>
+  </div>
+
+  <!-- ============ CREATE ACCOUNT ============ -->
+  <div class="view" id="v-create">
+    <div class="tabs"><button id="t-signin2">Sign in</button><button class="on" id="t-create2">Create account</button></div>
+    <label for="cr-uid">Choose a user ID</label>
+    <input id="cr-uid" autocomplete="username" placeholder="e.g. j.sharma">
+    <label for="cr-email">Email (for account recovery)</label>
+    <input id="cr-email" type="email" autocomplete="email" placeholder="you@company.com">
+    <label for="cr-pw">Choose a password</label>
+    <div class="pw-wrap"><input id="cr-pw" type="password" autocomplete="new-password" placeholder="minimum 8 characters"><button class="eye" data-eye="cr-pw" tabindex="-1">👁</button></div>
+    <div class="strength"><i id="cr-meter"></i></div>
+    <label for="cr-pw2">Confirm password</label>
+    <input id="cr-pw2" type="password" autocomplete="new-password" placeholder="repeat password">
+    <div class="msg err" id="cr-msg"></div>
+    <div class="trial-box">
+      <div class="tb-head"><span>Your free month starts today</span><span class="tb-days" id="cr-trial">30 days</span></div>
+      <div class="trial-bar"><i style="width:100%"></i></div>
+      <div class="tb-note">Full access to all regional modules, the Executive View and the weekly intelligence brief. After 30 days, choose a plan that suits you — or walk away, no questions asked.</div>
+    </div>
+    <button class="btn" id="cr-go">Create account & start free month</button>
+  </div>
+
+  <!-- ============ PAYMENT ============ -->
+  <div class="view" id="v-payment">
+    <div class="tabs" style="visibility:hidden"><button>&nbsp;</button><button>&nbsp;</button></div>
+    <div class="msg ok" id="pay-note" style="margin:0 0 8px">Your free month has ended. Pick a plan below to continue.</div>
+    <div class="plan-grid" id="plans">
+      <div class="plan sel" data-plan="monthly" data-price="2999" data-days="30">
+        <div class="p-name">Professional · Monthly</div>
+        <div class="p-price">₹2,999 <small>/ month</small></div>
+        <div class="p-note">All modules, Executive View, weekly brief. Cancel anytime.</div>
+      </div>
+      <div class="plan" data-plan="yearly" data-price="29999" data-days="365">
+        <div class="badge">2 months free</div>
+        <div class="p-name">Professional · Yearly</div>
+        <div class="p-price">₹29,999 <small>/ year</small></div>
+        <div class="p-note">Everything in Monthly. Equivalent to ₹2,500/month — save 17%.</div>
+      </div>
+      <div class="plan" data-plan="team" data-price="11999" data-days="30">
+        <div class="p-name">Team · 5 seats</div>
+        <div class="p-price">₹11,999 <small>/ month</small></div>
+        <div class="p-note">For desks and pursuit teams. Yearly team plan ₹1,19,999 (save 17%).</div>
+      </div>
+    </div>
+    <div class="qr-zone">
+      <img src="data:image/png;base64,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" alt="UPI QR code">
+      <div class="qr-side">
+        <b>Pay by UPI — any app</b><br>
+        Scan with GPay, PhonePe, Paytm or any UPI app. On mobile?
+        <div class="upi-id" id="upi-open"><span>9836296103@upi</span><span class="copy-hint">tap to open app →</span></div>
+        <span style="font-size:11px">Amount: as per the plan you select above.</span>
+      </div>
+    </div>
+    <label for="pay-ref">UPI transaction reference (UTR / confirmation no.)</label>
+    <input id="pay-ref" placeholder="12-digit UPI reference from your payment app">
+    <div class="msg err" id="pay-msg"></div>
+    <button class="btn" id="pay-go">I have paid — activate my subscription</button>
+    <div class="foot">Access is activated immediately on submission and stays provisional until the reference is verified. Terms: single-user licence, research use. <b>Support: reply to your welcome brief.</b></div>
+  </div>
+
+  <!-- ============ SETTINGS ============ -->
+  <div class="view" id="v-settings">
+    <div class="tabs" style="visibility:hidden"><button>&nbsp;</button><button>&nbsp;</button></div>
+    <div class="settings-row"><div class="sr-l">Signed in as<b id="st-uid"></b></div></div>
+    <div class="settings-row"><div class="sr-l">Plan<small id="st-plan"></small></div></div>
+    <div class="settings-row"><div class="sr-l">Days remaining<small id="st-days"></small></div></div>
+    <div class="settings-row"><div class="sr-l">Change password<small>Choose a new password</small></div><button class="link-btn" id="st-chpw">Change</button></div>
+    <div id="st-chpw-zone" style="display:none;margin-top:6px">
+      <label for="st-old">Current password</label>
+      <input id="st-old" type="password" autocomplete="current-password">
+      <label for="st-new">New password</label>
+      <input id="st-new" type="password" autocomplete="new-password">
+      <label for="st-new2">Confirm new password</label>
+      <input id="st-new2" type="password" autocomplete="new-password">
+      <div class="msg err" id="st-msg"></div>
+      <button class="btn" id="st-savepw">Save new password</button>
+    </div>
+    <div class="msg err" id="st-msg2"></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn ghost" style="margin-top:0" id="st-back">← Back</button>
+      <button class="btn ghost" style="margin-top:0;color:#E8A28E;border-color:rgba(163,70,46,.5)" id="st-logout">Sign out</button>
+    </div>
+  </div>
+
+  <div class="foot" style="margin-top:26px">
+    <b>Data discipline:</b> every figure labelled FACT / CALCULATED / ASSESSMENT · Data as of Sep 2026<br>
+    Published by <b>GSCC Research</b> · An independent research product
+  </div>
+</div>
+</div>
+
+<script>
+/* ---------- Particle network background ("AI mesh") ---------- */
+(function(){
+  var c=document.getElementById('bg'),x=c.getContext('2d'),P=[],W,H,N=Math.min(70,Math.floor(innerWidth/22));
+  function rs(){W=c.width=innerWidth;H=c.height=innerHeight}
+  rs();addEventListener('resize',rs);
+  for(var i=0;i<N;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:1+Math.random()*1.8,g:Math.random()<.16,t:Math.random()<.3});
+  (function tick(){
+    x.clearRect(0,0,W,H);
+    for(var i=0;i<N;i++){var p=P[i];p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);
+      x.fillStyle=p.g?'rgba(227,180,92,.75)':(p.t?'rgba(79,179,171,.65)':'rgba(140,160,190,.5)');
+      x.fill();}
+    for(var a=0;a<N;a++)for(var b=a+1;b<N;b++){var p1=P[a],p2=P[b],dx=p1.x-p2.x,dy=p1.y-p2.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<130){x.strokeStyle='rgba(120,140,175,'+(0.16*(1-d/130))+')';x.lineWidth=.7;x.beginPath();x.moveTo(p1.x,p1.y);x.lineTo(p2.x,p2.y);x.stroke();}}
+    requestAnimationFrame(tick);
+  })();
+})();
+
+/* ---------- Auth core ---------- */
+var LS_USERS='gscc_users', LS_SES='gscc_session', TRIAL_DAYS=30, SES_DAYS=7;
+var enc=new TextEncoder();
+function getUsers(){try{return JSON.parse(localStorage.getItem(LS_USERS)||'{}')}catch(e){return{}}}
+function saveUsers(u){localStorage.setItem(LS_USERS,JSON.stringify(u))}
+function getSes(){try{return JSON.parse(localStorage.getItem(LS_SES)||'null')}catch(e){return null}}
+function salt(){var a=new Uint8Array(16);crypto.getRandomValues(a);return Array.from(a).map(function(b){return b.toString(16).padStart(2,'0')}).join('')}
+function derive(pw,s){return crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveBits']).then(function(k){
+  return crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(s),iterations:60000,hash:'SHA-256'},k,256)}).then(function(buf){
+  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('')})}
+
+function V(id){return document.getElementById(id)}
+function show(id){['v-welcome','v-signin','v-create','v-payment','v-settings'].forEach(function(v){V(v).classList.toggle('on',v===id)})}
+
+function startSession(uid){
+  var s={uid:uid,loginAt:Date.now(),sessionExpires:Date.now()+SES_DAYS*86400000};
+  localStorage.setItem(LS_SES,JSON.stringify(s));
+}
+function accountState(){
+  var ses=getSes(),users=getUsers(),now=Date.now();
+  if(!ses||!users[ses.uid])return{mode:'anon'};
+  var a=users[ses.uid];
+  if(!(ses.sessionExpires>now))return{mode:'anon',known:ses.uid};
+  if(a.planExpires&&a.planExpires>now)return{mode:'active',acct:a,uid:ses.uid,daysLeft:Math.ceil((a.planExpires-now)/86400000)};
+  return{mode:'expired',acct:a,uid:ses.uid};
+}
+
+/* ---------- Boot ---------- */
+var st=accountState();
+if(st.mode==='active'){
+  V('w-status').textContent='Welcome back, '+st.uid+'.';
+  V('w-trial').innerHTML='<div class="tb-head"><span>'+(st.acct.plan==='trial'?'Free trial':'Subscription')+'</span><span class="tb-days">'+st.daysLeft+' days left</span></div><div class="trial-bar"><i style="width:'+Math.min(100,Math.round(st.daysLeft/(st.acct.plan==='trial'?TRIAL_DAYS:30)*100))+'%"></i></div><div class="tb-note">'+(st.acct.plan==='trial'?'Your first month is free. When it ends, pick a plan — monthly, yearly (2 months free) or team.':'Renews by UPI. Manage in account settings.')+'</div>';
+  show('v-welcome');
+}else if(st.mode==='expired'){show('v-payment')}
+else{show('v-signin')}
+if(location.hash==='#payment'&&st.mode!=='active'){show('v-payment')}
+
+/* ---------- Tabs / view links ---------- */
+function tabTo(view){
+  if(view==='signin')show('v-signin');else show('v-create');
+  V('t-signin').classList.toggle('on',view==='signin');V('t-create').classList.toggle('on',view!=='signin');
+  V('t-signin2').classList.toggle('on',view==='signin');V('t-create2').classList.toggle('on',view!=='signin');
+}
+V('t-signin').onclick=function(){tabTo('signin')};V('t-create').onclick=function(){tabTo('create')};
+V('t-signin2').onclick=function(){tabTo('signin')};V('t-create2').onclick=function(){tabTo('create')};
+V('si-tocreate').onclick=function(e){e.preventDefault();tabTo('create')};
+
+/* ---------- Sign in ---------- */
+V('si-go').onclick=doSignin;
+V('si-pw').addEventListener('keydown',function(e){if(e.key==='Enter')doSignin()});
+function doSignin(){
+  var uid=V('si-uid').value.trim(),pw=V('si-pw').value,users=getUsers(),m=V('si-msg');
+  m.className='msg';if(!uid||!pw){m.className='msg err';m.textContent='Enter your user ID and password.';return}
+  if(!users[uid]){m.className='msg err';m.textContent='No account found for that user ID. Create one below — first month free.';return}
+  derive(pw,users[uid].salt).then(function(h){
+    if(h!==users[uid].hash){m.className='msg err';m.textContent='Incorrect password. Try again or reset it via account recovery.';return}
+    startSession(uid);location.href='index.html';
+  });
+}
+
+/* ---------- Create ---------- */
+V('cr-pw').addEventListener('input',function(){
+  var v=this.value,s=0;if(v.length>=8)s++;if(/[A-Z]/.test(v)&&/[a-z]/.test(v))s++;if(/\d/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
+  var el=V('cr-meter');el.style.width=(v.length?Math.max(12,s*25):0)+'%';el.className=s>=3?'good':(s===2?'mid':'');
+});
+V('cr-go').onclick=doCreate;
+function doCreate(){
+  var uid=V('cr-uid').value.trim().toLowerCase(),em=V('cr-email').value.trim(),p1=V('cr-pw').value,p2=V('cr-pw2').value,m=V('cr-msg');
+  m.className='msg';
+  if(!/^[a-z0-9._-]{3,24}$/.test(uid)){m.className='msg err';m.textContent='User ID: 3–24 chars, letters/numbers/dot/dash/underscore.';return}
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){m.className='msg err';m.textContent='Enter a valid email — it is your recovery path.';return}
+  if(p1.length<8){m.className='msg err';m.textContent='Password must be at least 8 characters.';return}
+  if(p1!==p2){m.className='msg err';m.textContent='Passwords do not match.';return}
+  var users=getUsers();
+  if(users[uid]){m.className='msg err';m.textContent='That user ID is taken on this device. Pick another.';return}
+  var s=salt();
+  derive(p1,s).then(function(h){
+    users[uid]={salt:s,hash:h,email:em,created:Date.now(),plan:'trial',planExpires:Date.now()+TRIAL_DAYS*86400000};
+    saveUsers(users);startSession(uid);location.href='index.html';
+  });
+}
+
+/* ---------- Welcome view ---------- */
+V('w-enter').onclick=function(){location.href='executive-view.html'};
+V('w-logout').onclick=V('st-logout').onclick=function(){localStorage.removeItem(LS_SES);location.reload()};
+V('w-settings').onclick=function(){
+  var s=accountState();V('st-uid').textContent=s.uid;
+  V('st-plan').textContent=(s.acct&&s.acct.plan==='trial'?'Free trial month':(s.acct&&s.acct.plan==='yearly'?'Yearly — Professional':'Monthly — Professional'));
+  V('st-days').textContent=(s.daysLeft||0)+' days';show('v-settings');
+};
+V('st-back').onclick=function(){location.reload()};
+
+/* ---------- Payment ---------- */
+document.querySelectorAll('.plan').forEach(function(p){
+  p.onclick=function(){document.querySelectorAll('.plan').forEach(function(q){q.classList.remove('sel')});p.classList.add('sel')};
+});
+V('upi-open').onclick=function(){
+  var sel=document.querySelector('.plan.sel'),am=sel?sel.getAttribute('data-price'):'';
+  location.href='upi://pay?pa=9836296103@upi&pn=Global%20Securities%20Command%20Centre'+(am?'&am='+am:'')+'&cu=INR';
+};
+V('pay-go').onclick=function(){
+  var ref=V('pay-ref').value.trim(),m=V('pay-msg');m.className='msg';
+  if(!/^[0-9]{9,22}$/.test(ref)){m.className='msg err';m.textContent='Enter the numeric UPI reference (UTR) from your payment app — 9 to 22 digits.';return}
+  var st=accountState();if(st.mode==='anon'){show('v-signin');return}
+  var sel=document.querySelector('.plan.sel'),days=parseInt(sel.getAttribute('data-days'),10),plan=sel.getAttribute('data-plan');
+  var users=getUsers();users[st.uid].plan=plan;users[st.uid].planExpires=Date.now()+days*86400000;users[st.uid].txnRef=ref;users[st.uid].txnAt=Date.now();
+  saveUsers(users);startSession(st.uid);
+  V('pay-note').textContent='Subscription active. Reference '+ref+' recorded — thank you.';
+  setTimeout(function(){location.href='executive-view.html'},900);
+};
+
+/* ---------- Password change ---------- */
+V('st-chpw').onclick=function(){var z=V('st-chpw-zone');z.style.display=z.style.display==='none'?'block':'none'};
+V('st-savepw').onclick=function(){
+  var st=accountState(),m=V('st-msg');m.className='msg';
+  if(st.mode!=='active'&&st.mode!=='expired'){return}
+  var o=V('st-old').value,n1=V('st-new').value,n2=V('st-new2').value;
+  if(n1.length<8){m.className='msg err';m.textContent='New password must be at least 8 characters.';return}
+  if(n1!==n2){m.className='msg err';m.textContent='New passwords do not match.';return}
+  var users=getUsers(),a=users[st.uid];
+  derive(o,a.salt).then(function(h){
+    if(h!==a.hash){m.className='msg err';m.textContent='Current password is incorrect.';return}
+    var s=salt();return derive(n1,s).then(function(nh){a.salt=s;a.hash=nh;saveUsers(users);m.className='msg ok';m.textContent='Password updated. Use your new password next time you sign in.'});
+  });
+};
+
+/* ---------- Eye toggles + copy ---------- */
+document.querySelectorAll('.eye').forEach(function(b){b.onclick=function(){var i=V(b.getAttribute('data-eye'));i.type=i.type==='password'?'text':'password'}});
+</script>
+</body>
+</html>
