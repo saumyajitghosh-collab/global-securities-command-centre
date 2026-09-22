@@ -1,0 +1,18 @@
+name: Apply Sep 22 data update
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run data patch script
+        run: python3 apply-sep22-update.py
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "No changes needed"; else git commit -m "Data refresh Sep 2026: AMFI Aug AUM 87.08L cr, GIFT Q1FY27, ETFGI Aug records, SEC custody-rule OIRA status, HSBC-RLAM and Citi-Aegon mandates, ADGM final rules, Saudi MMF cap"; git push; fi
