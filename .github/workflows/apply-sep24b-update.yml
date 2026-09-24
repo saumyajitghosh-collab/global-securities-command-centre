@@ -1,0 +1,18 @@
+name: Apply Sep 24 evening data update
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run data patch script
+        run: python3 apply-sep24b-update.py
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "No changes needed"; else git commit -m "Data update 24 Sep (evening): Motilal custodian entry, SIF Intelligence detail, SEBI board watch, Qatar-Apex hub, HSBC Al Rajhi ETF custody, NT Singapore unit trusts, Warwickshire, SocGen-Ultumus, SC-LMAX Luxembourg"; git push; fi
