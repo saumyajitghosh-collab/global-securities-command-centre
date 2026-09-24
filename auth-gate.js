@@ -1,8 +1,9 @@
-/* GSCC Auth Gate v2 — client-side session guard + device-tied trial.
+/* GSCC Auth Gate v3 — session guard + device-tied trial + personalisation.
    - Runs synchronously in <head> of every protected page.
    - Trial is tied to the DEVICE (not the account): a new account after the
      device trial has ended does not restart the clock.
    - Owner ("founder") accounts never expire.
+   - Applies the user's saved theme (gscc_prefs) and exposes GSCC_PREFS.
    - Redirects unauthenticated / expired visitors to login.html. */
 (function () {
   'use strict';
@@ -71,4 +72,16 @@
       window.location.replace('login.html');
     }
   };
+
+  /* ---- personalisation (markets, role, theme, watchlist) ---- */
+  var THEMES = { classic: ['#C08A2D', '#E3B45C'], teal: ['#2C7A74', '#4FB3AB'], violet: ['#5B4A8A', '#9C8CD6'], emerald: ['#1F7A4D', '#57C28A'] };
+  var P = null;
+  try { P = JSON.parse(localStorage.getItem('gscc_prefs') || 'null'); } catch (e) {}
+  if (!P) P = {};
+  var th = THEMES[P.theme] || THEMES.classic;
+  try {
+    document.documentElement.style.setProperty('--gold', th[0]);
+    document.documentElement.style.setProperty('--gold-bright', th[1]);
+  } catch (e) {}
+  window.GSCC_PREFS = { markets: P.markets || null, role: P.role || '', theme: P.theme || 'classic', watch: P.watch || [] };
 })();

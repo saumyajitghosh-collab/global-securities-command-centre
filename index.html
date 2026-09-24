@@ -144,7 +144,7 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
   <h2>The Executive View.</h2>
   <p class="lede">Every module synthesised at leadership altitude — built for the 90-second scan before the conversation that matters.</p>
 
-  <a class="exec-card" href="executive-view.html">
+  <a class="exec-card" href="executive-view.html" data-market="exec">
     <div class="ec-eyebrow">Synthesis Layer · All Regions</div>
     <h3>The Executive View — Global Analysis & Decision Support</h3>
     <p>A live allocation model across five theatres, fourteen mandate triggers ranked by status, the cross-region comparison matrix, and the sequenced 6–12 month approach. Plus the convergence thesis and pre-answered board questions — the one page a leadership team actually scans.</p>
@@ -158,9 +158,11 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
   <h2>Choose your theatre.</h2>
   <p class="lede">Each module is a standalone knowledge base — market sizing, custody landscape, regulatory radar, competitive intelligence, buyer maps, and six ready-to-deploy sales plays. Data labelled <span class="tag fact">FACT</span> / <span class="tag calc">CALCULATED</span> / <span class="tag assess">ASSESSMENT</span> / <span class="tag gap">DATA GAP</span> throughout.</p>
 
+  <div class="your-edition" id="your-edition" style="display:none"></div>
+
   <div class="module-grid">
 
-    <a class="module-card apac" href="india-asset-servicing-briefing.html">
+    <a class="module-card apac" href="india-asset-servicing-briefing.html" data-market="india">
       <div class="mc-head">
         <div class="mc-flag">🇮🇳</div>
         <div class="mc-eyebrow">APAC · India Briefing</div>
@@ -174,7 +176,7 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
       </div>
     </a>
 
-    <a class="module-card apac" href="apac-asset-servicing-kb.html">
+    <a class="module-card apac" href="apac-asset-servicing-kb.html" data-market="apac">
       <div class="mc-head">
         <div class="mc-flag">🌏</div>
         <div class="mc-eyebrow">APAC · Knowledge Base</div>
@@ -188,7 +190,7 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
       </div>
     </a>
 
-    <a class="module-card apac" href="new-rails-dlt-ai-apac.html">
+    <a class="module-card apac" href="new-rails-dlt-ai-apac.html" data-market="rails">
       <div class="mc-head">
         <div class="mc-flag">🔗</div>
         <div class="mc-eyebrow">APAC · New Rails</div>
@@ -202,7 +204,7 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
       </div>
     </a>
 
-    <a class="module-card eu" href="europe-asset-servicing-kb.html">
+    <a class="module-card eu" href="europe-asset-servicing-kb.html" data-market="europe">
       <div class="mc-head">
         <div class="mc-flag">🇪🇺</div>
         <div class="mc-eyebrow">Europe</div>
@@ -216,7 +218,7 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
       </div>
     </a>
 
-    <a class="module-card na" href="north-america-asset-servicing-kb.html">
+    <a class="module-card na" href="north-america-asset-servicing-kb.html" data-market="namerica">
       <div class="mc-head">
         <div class="mc-flag">🇺🇸</div>
         <div class="mc-eyebrow">North America</div>
@@ -230,7 +232,7 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
       </div>
     </a>
 
-    <a class="module-card me" href="middle-east-asset-servicing-kb.html">
+    <a class="module-card me" href="middle-east-asset-servicing-kb.html" data-market="mideast">
       <div class="mc-head">
         <div class="mc-flag">🕌</div>
         <div class="mc-eyebrow">Middle East</div>
@@ -300,6 +302,19 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
       </ul>
       <a class="p-btn ghost" href="login.html">Start free month</a>
     </div>
+    <div class="plan">
+      <div class="p-name">Modular · Build your own</div>
+      <div class="p-price">₹999 <small>/ market / month</small></div>
+      <div class="p-save">Pay only for the markets you cover</div>
+      <ul>
+        <li>Choose your markets — add or remove anytime, price adjusts</li>
+        <li>The Weekly Brief, personalised to your markets</li>
+        <li>Role lens, theme & trigger watchlist</li>
+        <li>CSV data exports</li>
+        <li>All modules à la carte = ₹5,994 — beyond two markets, Professional is better value</li>
+      </ul>
+      <a class="p-btn ghost" href="login.html#configure">Configure my markets</a>
+    </div>
   </div>
   <div class="p-note">First month free on every plan · Payment by UPI (any app) · Single-user research licence<br>Benchmarks: Tokenization Insight £39.99/mo · MarketOntology Professional $399/mo · niche custody intelligence newsletters $25–50/mo</div>
 </div>
@@ -333,5 +348,38 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--te
 })();
 </script>
 
+<style>
+.your-edition{margin:14px 0 4px;background:rgba(192,138,45,.08);border:1px solid rgba(192,138,45,.3);border-radius:12px;padding:14px 18px}
+.ye-kicker{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-bright)}
+.ye-markets{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ye-markets span{background:rgba(14,27,44,.55);border:1px solid rgba(192,138,45,.35);border-radius:14px;padding:4px 12px;font-size:12.5px;color:var(--text)}
+.ye-lens{font-size:13px;color:var(--muted);margin-top:8px}
+.ye-watch{margin-top:8px;font-size:11.5px;color:var(--muted)}
+.ye-watch span{display:inline-block;background:rgba(44,122,116,.15);border:1px solid rgba(79,179,171,.3);border-radius:4px;padding:2px 7px;margin:2px 4px 0 0;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--teal-bright)}
+.ye-more{font-size:12px;color:var(--muted);margin-top:8px}
+.ye-more a{color:var(--gold-bright)}
+</style>
+<script>
+(function(){
+  var P=null;try{P=JSON.parse(localStorage.getItem('gscc_prefs')||'null')}catch(e){}
+  var el0=document.getElementById('your-edition');
+  if(!P||!P.markets){if(el0){el0.style.display='block';el0.innerHTML='<div class="ye-kicker">Personalise</div><div class="ye-lens">Choose your markets, role lens, theme and trigger watchlist — <a href="login.html#configure">configure your edition</a>.</div>'}return}
+  var TH={classic:['#C08A2D','#E3B45C'],teal:['#2C7A74','#4FB3AB'],violet:['#5B4A8A','#9C8CD6'],emerald:['#1F7A4D','#57C28A']};
+  if(P.theme&&TH[P.theme]){document.documentElement.style.setProperty('--gold',TH[P.theme][0]);document.documentElement.style.setProperty('--gold-bright',TH[P.theme][1])}
+  var el=el0;if(!el)return;
+  var ALL=['india','apac','rails','europe','namerica','mideast'];
+  var NAME={india:'🇮🇳 India',apac:'🌏 APAC',rails:'🧬 New Rails',europe:'🇪🇺 Europe',namerica:'🇺🇸 North America',mideast:'🕌 Middle East'};
+  var LENS={sales:'Mandate-flow lens: who is moving, and why.',presales:'Trigger-first lens: what is buyable now.',ops:'Run-the-bank lens: regulatory and operational load.',tech:'Rails-first lens: DLT, AI and new infrastructure.',leadership:'Board lens: allocation, thesis and triggers.'};
+  var known=P.markets.filter(function(m){return ALL.indexOf(m)>-1});
+  if(!known.length)return;
+  document.querySelectorAll('.module-card').forEach(function(c){if(known.indexOf(c.getAttribute('data-market'))<0)c.style.display='none'});
+  var hidden=ALL.length-known.length;
+  el.innerHTML='<div class="ye-kicker">Your edition</div><div class="ye-markets">'+known.map(function(m){return '<span>'+NAME[m]+'</span>'}).join('')+'</div>'+
+    (P.role&&LENS[P.role]?'<div class="ye-lens">'+LENS[P.role]+'</div>':'')+
+    ((P.watch&&P.watch.length)?'<div class="ye-watch"><b style="color:var(--teal-bright)">Watchlist:</b> '+P.watch.map(function(w){return '<span>'+w+'</span>'}).join('')+'</div>':'')+
+    (hidden>0?'<div class="ye-more">'+hidden+' more module'+(hidden>1?'s':'')+' available — <a href="login.html#configure">add markets anytime</a></div>':'<div class="ye-more"><a href="login.html#configure">Adjust markets, role lens, theme or watchlist</a></div>');
+  el.style.display='block';
+})();
+</script>
 </body>
 </html>

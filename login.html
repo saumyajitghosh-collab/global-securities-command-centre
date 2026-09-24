@@ -115,6 +115,28 @@ a{color:var(--gold);text-decoration:none}
 .admin-user .au-actions button.danger:hover{border-color:rgba(163,70,46,.6);color:#E8A28E}
 .scrollwrap{max-height:280px;overflow-y:auto;padding-right:4px}
 
+/* Personalisation */
+.cfg-head{font-family:'Fraunces',serif;font-size:19px;color:#fff;margin-bottom:4px}
+.cfg-sub{font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.mk-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mk{display:flex;align-items:center;gap:9px;background:rgba(14,27,44,.55);border:1.5px solid var(--line);border-radius:9px;padding:10px 12px;cursor:pointer;font-size:13.5px;color:var(--text);transition:all .15s}
+.mk:hover{border-color:rgba(192,138,45,.5)}
+.mk:has(input:checked){border-color:var(--gold);background:rgba(192,138,45,.08)}
+.mk input{width:auto;accent-color:var(--gold)}
+.mk.sm{font-size:11px;font-family:'IBM Plex Mono',monospace;padding:7px 10px}
+.watch-grid{display:grid;grid-template-columns:1fr;gap:6px;max-height:220px;overflow-y:auto;padding-right:4px}
+.role-row,.theme-row{display:flex;gap:8px;flex-wrap:wrap}
+.rpill{background:rgba(14,27,44,.6);border:1.5px solid var(--line);color:var(--muted);font-family:'Public Sans',sans-serif;font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:18px;cursor:pointer;transition:all .15s}
+.rpill:hover{color:var(--text)}
+.rpill.on{border-color:var(--gold);color:var(--gold-bright);background:rgba(192,138,45,.1)}
+.swatch{width:34px;height:34px;border-radius:50%;border:2.5px solid transparent;cursor:pointer;transition:all .15s}
+.swatch.on{border-color:#fff;transform:scale(1.12)}
+.cfg-total{background:rgba(44,122,116,.1);border:1px solid rgba(79,179,171,.3);border-radius:10px;padding:11px 14px;font-size:13px;color:var(--muted);margin-top:10px}
+.cfg-total b{color:var(--gold-bright)}
+.research-menu{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 4px}
+.research-menu a{background:rgba(14,27,44,.55);border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:12.5px;color:var(--text);text-decoration:none;transition:all .15s}
+.research-menu a:hover{border-color:var(--gold);color:var(--gold-bright)}
+
 @media(max-width:520px){.card{padding:28px 22px 22px}.qr-zone{flex-direction:column;text-align:center}.qr-zone .upi-id{flex-direction:column;gap:4px}}
 </style>
 </head>
@@ -135,7 +157,8 @@ a{color:var(--gold);text-decoration:none}
     <div class="msg ok" id="w-status" style="margin:0 0 4px"></div>
     <div class="trial-box" id="w-trial"></div>
     <button class="btn" id="w-enter">Enter the Command Centre →</button>
-    <div style="display:flex;gap:10px;margin-top:10px">
+    <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
+      <button class="btn ghost" style="margin-top:0" id="w-config">⚙ Markets & personalisation</button>
       <button class="btn ghost" style="margin-top:0" id="w-settings">Account settings</button>
       <button class="btn ghost" style="margin-top:0" id="w-logout">Sign out</button>
     </div>
@@ -199,8 +222,13 @@ a{color:var(--gold);text-decoration:none}
         <div class="p-price">₹11,999 <small>/ month</small></div>
         <div class="p-note">For desks and pursuit teams. Yearly team plan ₹1,19,999 (save 17%).</div>
       </div>
+      <div class="plan" data-plan="modular" data-days="30">
+        <div class="p-name">Modular · Build your own</div>
+        <div class="p-price">₹999 <small>/ market / month</small></div>
+        <div class="p-note">Pay only for the markets in your configuration — add or remove anytime, the price adjusts. Weekly Brief personalised to your markets, CSV exports, role lens and watchlist included.</div>
+      </div>
     </div>
-    <div class="premium-list"><b>What the paid tier adds on top of the modules:</b> the <b>Weekly Brief</b> — a premium intelligence edition published every Monday with the week's mandate triggers and the sales angle of the week · <b>CSV data exports</b> of the cross-region matrix and trigger dashboard · <b>priority research requests</b> (two per quarter, answered by email) · early access to new analytical tools as they ship.</div>
+    <div class="premium-list"><b>What the paid tier adds on top of the modules:</b> the <b>Weekly Brief</b> — a premium intelligence edition published every Monday with the week's mandate triggers and the sales angle of the week · <b>CSV data exports</b> of the cross-region matrix and trigger dashboard · <b>priority research requests</b> (two per quarter, answered by email) · early access to new analytical tools as they ship. <b>Modular:</b> ₹999/month per market — the Brief personalised to your markets. <b>Custom research:</b> menu-priced per request, from Account settings.</div>
     <div class="qr-zone">
       <img src="data:image/png;base64,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" alt="UPI QR code">
       <div class="qr-side">
@@ -217,12 +245,32 @@ a{color:var(--gold);text-decoration:none}
     <div class="foot">Access is activated immediately on submission and stays provisional until the reference is verified. Terms: single-user licence, research use. <b>Support: reply to your welcome brief.</b></div>
   </div>
 
+  <!-- ============ CONFIGURE ============ -->
+  <div class="view" id="v-configure">
+    <div class="tabs" style="visibility:hidden"><button>&nbsp;</button><button>&nbsp;</button></div>
+    <div class="cfg-head">Personalise your Command Centre</div>
+    <p class="cfg-sub">Choose the markets you cover — your price follows your selection. Add or remove markets anytime; the payment adjusts. Everything else (role lens, theme, watchlist) is included.</p>
+    <label>Markets in my plan</label>
+    <div class="mk-grid" id="mk-grid"></div>
+    <div class="cfg-total" id="cfg-total"></div>
+    <label>My role lens <span style="text-transform:none;letter-spacing:0">— how the brief and dashboard frame the data</span></label>
+    <div class="role-row" id="role-row"></div>
+    <label>Theme</label>
+    <div class="theme-row" id="theme-row"></div>
+    <label>Trigger watchlist</label>
+    <div class="watch-grid" id="watch-grid"></div>
+    <div class="msg err" id="cf-msg"></div>
+    <button class="btn" id="cf-save">Save my configuration</button>
+    <div class="foot">Modular ₹999/mo per market · Professional ₹2,999/mo (all markets + Executive View) · Team ₹11,999/mo (5 seats).<br>Custom research is menu-priced per request — see Account settings.</div>
+  </div>
+
   <!-- ============ SETTINGS ============ -->
   <div class="view" id="v-settings">
     <div class="tabs" style="visibility:hidden"><button>&nbsp;</button><button>&nbsp;</button></div>
     <div class="settings-row"><div class="sr-l">Signed in as<b id="st-uid"></b></div></div>
     <div class="settings-row"><div class="sr-l">Plan<small id="st-plan"></small></div></div>
     <div class="settings-row"><div class="sr-l">Days remaining<small id="st-days"></small></div></div>
+    <div class="settings-row"><div class="sr-l">Markets & personalisation<small>Markets, role lens, theme, watchlist — your price follows your selection</small></div><button class="link-btn" id="st-config">Configure</button></div>
     <div class="settings-row"><div class="sr-l">Change password<small>Choose a new password</small></div><button class="link-btn" id="st-chpw">Change</button></div>
     <div id="st-chpw-zone" style="display:none;margin-top:6px">
       <label for="st-old">Current password</label>
@@ -235,6 +283,15 @@ a{color:var(--gold);text-decoration:none}
       <button class="btn" id="st-savepw">Save new password</button>
     </div>
     <div class="msg err" id="st-msg2"></div>
+
+    <div class="cfg-head" style="color:var(--teal-bright);font-size:16px;margin-top:24px">✦ Custom research · menu pricing per request</div>
+    <div class="research-menu">
+      <a href="mailto:saumyajit.ghosh@gmail.com?subject=GSCC%20Research%3A%20Account%20deep-dive%20(%E2%82%B94%2C999)&body=Account%20to%20research%3A%0A%0AWhat%20I%20need%20by%20end%20of%20week%3A%0A">Named-account deep dive — ₹4,999</a>
+      <a href="mailto:saumyajit.ghosh@gmail.com?subject=GSCC%20Research%3A%20Competitor%20brief%20(%E2%82%B97%2C999)&body=Competitor%20to%20profile%3A%0A%0ADecision%20context%3A%0A">Competitor positioning brief — ₹7,999</a>
+      <a href="mailto:saumyajit.ghosh@gmail.com?subject=GSCC%20Research%3A%20Regulatory%20timeline%20(%E2%82%B95%2C999)&body=Regulator%20%2F%20topic%3A%0A%0AMarkets%20of%20interest%3A%0A">Regulatory timeline brief — ₹5,999</a>
+      <a href="mailto:saumyajit.ghosh@gmail.com?subject=GSCC%20Research%3A%20Bespoke%20question%20(from%20%E2%82%B92%2C999)&body=My%20question%3A%0A%0AWhy%20now%3A%0A">Bespoke question — from ₹2,999</a>
+    </div>
+    <div class="tb-note" style="margin-top:6px">Each request is scoped and quoted before work begins; payment by UPI on acceptance. Professional and Team subscribers include the priority request line (two per quarter) — these menu prices apply to additional or standalone requests.</div>
 
     <div id="admin-zone" style="display:none">
       <div class="admin-head">⚑ Founder · Admin Panel</div>
@@ -319,7 +376,7 @@ function sha256hex(s){return crypto.subtle.digest('SHA-256',enc.encode(s)).then(
   return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('')})}
 
 function V(id){return document.getElementById(id)}
-function show(id){['v-welcome','v-signin','v-create','v-payment','v-settings'].forEach(function(v){V(v).classList.toggle('on',v===id)})}
+function show(id){['v-welcome','v-signin','v-create','v-payment','v-settings','v-configure'].forEach(function(v){V(v).classList.toggle('on',v===id)})}
 function startSession(uid){
   var s={uid:uid,loginAt:Date.now(),sessionExpires:Date.now()+SES_DAYS*DAY};
   localStorage.setItem(LS_SES,JSON.stringify(s));
@@ -337,6 +394,7 @@ function accountState(){
 
 /* ---------- Boot ---------- */
 var st=accountState();
+applyTheme(getPrefs().theme);
 if(st.mode==='active'){
   V('w-status').textContent='Welcome back, '+(st.owner?'Founder':st.uid)+'.';
   if(st.owner){
@@ -350,6 +408,7 @@ if(st.mode==='active'){
 }else if(st.mode==='expired'){show('v-payment')}
 else{show('v-signin')}
 if(location.hash==='#payment'&&st.mode!=='active'){show('v-payment')}
+if(location.hash==='#configure'&&st.mode==='active'){renderConfigure()}
 
 /* ---------- Tabs / view links ---------- */
 function tabTo(view){
@@ -401,14 +460,14 @@ function doCreate(){
       if(fh!==founderKeyHash()){m.className='msg err';m.textContent='Founder key incorrect.';return}
       return derive(p1,s).then(function(h){
         users[uid]={salt:s,hash:h,email:em,created:Date.now(),plan:'owner',planExpires:NEVER};
-        saveUsers(users);startSession(uid);location.href='index.html';
+        saveUsers(users);startSession(uid);location.href='login.html#configure';
       });
     });
     return;
   }
   derive(p1,s).then(function(h){
     users[uid]={salt:s,hash:h,email:em,created:Date.now(),plan:'trial',planExpires:trialEnd};
-    saveUsers(users);startSession(uid);location.href='index.html';
+    saveUsers(users);startSession(uid);location.href='login.html#configure';
   });
 }
 
@@ -432,15 +491,18 @@ document.querySelectorAll('.plan').forEach(function(p){
 });
 V('upi-open').onclick=function(){
   var sel=document.querySelector('.plan.sel'),am=sel?sel.getAttribute('data-price'):'';
+  if(sel&&sel.getAttribute('data-plan')==='modular'){var mkp=(getPrefs().markets||MARKETS);am=String(999*Math.max(1,mkp.length));}
   location.href='upi://pay?pa=9836296103@upi&pn=Global%20Securities%20Command%20Centre'+(am?'&am='+am:'')+'&cu=INR';
 };
 V('pay-go').onclick=function(){
   var ref=V('pay-ref').value.trim(),m=V('pay-msg');m.className='msg';
   if(!/^[0-9]{9,22}$/.test(ref)){m.className='msg err';m.textContent='Enter the numeric UPI reference (UTR) from your payment app — 9 to 22 digits.';return}
   var st=accountState();if(st.mode==='anon'){show('v-signin');return}
-  var sel=document.querySelector('.plan.sel'),days=parseInt(sel.getAttribute('data-days'),10),plan=sel.getAttribute('data-plan');
+  var sel=document.querySelector('.plan.sel'),days=parseInt(sel.getAttribute('data-days'),10)||30,plan=sel.getAttribute('data-plan');
+  if(plan==='modular'){days=30;}
   var users=getUsers(),a=users[st.uid];
   a.plan=plan;a.planExpires=Date.now()+days*DAY;a.txnRef=ref;a.txnAt=Date.now();
+  if(plan==='modular'){a.markets=(getPrefs().markets||MARKETS).slice();}
   saveUsers(users);setDevicePaidUntil(a.planExpires);startSession(st.uid);
   V('pay-note').textContent='Subscription active. Reference '+ref+' recorded — thank you.';
   setTimeout(function(){location.href='weekly-brief.html'},900);
@@ -498,6 +560,43 @@ V('ad-savekey').onclick=function(){
     return sha256hex(nk).then(function(nh){localStorage.setItem(LS_FKEY,nh);m.className='msg ok';m.textContent='Founder key updated.';V('ad-oldkey').value='';V('ad-newkey').value='';});
   });
 };
+
+/* ---------- Personalisation (markets, role, theme, watchlist) ---------- */
+var MARKETS=['india','apac','rails','europe','namerica','mideast'];
+var MKNAME={india:'🇮🇳 India',apac:'🌏 APAC',rails:'🧬 New Rails & Digital',europe:'🇪🇺 Europe',namerica:'🇺🇸 North America',mideast:'🕌 Middle East'};
+var ROLES=[['sales','Sales'],['presales','Presales & Solutions'],['ops','Operations & Servicing'],['tech','Technology'],['leadership','Leadership']];
+var THEMES={classic:['#C08A2D','#E3B45C'],teal:['#2C7A74','#4FB3AB'],violet:['#5B4A8A','#9C8CD6'],emerald:['#1F7A4D','#57C28A']};
+var TRIGNAMES=['SIF_SCALE_ACCELERATION','NEW_SIF_MANAGER','NEW_CUSTODIAN_ENTRANT','ETF_RECORD_FLOWS','ADGM_GROWTH_SURGE','QFI_REMOVAL_COMPLETED','HSBC_EU_CUSTODY_EXIT','JAPAN_RECORD_AUM','AI_COST_CURVE_RESET','KINEXYS_SCALE','REC_TOKENISED_BOND','DORA_ENFORCEMENT','AIFMD_II_LPD','SEC_CUSTODY_RULE','PIF_INTERNATIONALISATION','T_PLUS_ONE_AFTERMATH'];
+function getPrefs(){try{var p=JSON.parse(localStorage.getItem('gscc_prefs')||'null');return p||{}}catch(e){return{}}}
+function savePrefs(p){localStorage.setItem('gscc_prefs',JSON.stringify(p))}
+function applyTheme(t){var th=THEMES[t]||THEMES.classic;document.documentElement.style.setProperty('--gold',th[0]);document.documentElement.style.setProperty('--gold-bright',th[1])}
+function updTotal(){
+  var n=V('mk-grid').querySelectorAll('input:checked').length;
+  V('cfg-total').innerHTML='Modular price: <b>₹'+(n===0?0:n*999).toLocaleString('en-IN')+'/month</b> for '+n+' market'+(n===1?'':'s')+' · Professional (all markets + Executive View): <b>₹2,999/month</b>'+(n>2?' — better value':'');
+}
+function renderConfigure(){
+  var p=getPrefs(),sel=(p.markets&&p.markets.length)?p.markets:MARKETS.slice();
+  V('mk-grid').innerHTML=MARKETS.map(function(m){return '<label class="mk"><input type="checkbox" data-mk="'+m+'"'+(sel.indexOf(m)>-1?' checked':'')+'><span>'+MKNAME[m]+'</span></label>'}).join('');
+  V('role-row').innerHTML=ROLES.map(function(r){return '<button class="rpill'+(p.role===r[0]?' on':'')+'" data-role="'+r[0]+'">'+r[1]+'</button>'}).join('');
+  V('theme-row').innerHTML=Object.keys(THEMES).map(function(k){return '<button class="swatch'+((p.theme||'classic')===k?' on':'')+'" data-th="'+k+'" title="'+k+'" style="background:'+THEMES[k][0]+'"></button>'}).join('');
+  V('watch-grid').innerHTML=TRIGNAMES.map(function(t){return '<label class="mk sm"><input type="checkbox" data-tr="'+t+'"'+(((p.watch)||[]).indexOf(t)>-1?' checked':'')+'><span>'+t+'</span></label>'}).join('');
+  updTotal();
+  V('mk-grid').querySelectorAll('input').forEach(function(i){i.onchange=updTotal});
+  V('role-row').querySelectorAll('button').forEach(function(b){b.onclick=function(){V('role-row').querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on')}});
+  V('theme-row').querySelectorAll('button').forEach(function(b){b.onclick=function(){V('theme-row').querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');applyTheme(b.getAttribute('data-th'))}});
+  show('v-configure');
+}
+V('cf-save').onclick=function(){
+  var mk=[].map.call(V('mk-grid').querySelectorAll('input:checked'),function(i){return i.getAttribute('data-mk')});
+  var roleB=V('role-row').querySelector('.rpill.on'),thB=V('theme-row').querySelector('.swatch.on');
+  var watch=[].map.call(V('watch-grid').querySelectorAll('input:checked'),function(i){return i.getAttribute('data-tr')});
+  var m=V('cf-msg');m.className='msg';
+  if(!mk.length){m.className='msg err';m.textContent='Select at least one market — or choose Professional for everything.';return}
+  savePrefs({markets:mk,role:roleB?roleB.getAttribute('data-role'):'',theme:thB?thB.getAttribute('data-th'):'classic',watch:watch});
+  location.href='index.html';
+};
+V('w-config').onclick=renderConfigure;
+V('st-config').onclick=renderConfigure;
 
 /* ---------- Eye toggles ---------- */
 document.querySelectorAll('.eye').forEach(function(b){b.onclick=function(){var i=V(b.getAttribute('data-eye'));i.type=i.type==='password'?'text':'password'}});
