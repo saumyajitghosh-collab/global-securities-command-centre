@@ -212,7 +212,7 @@ table.matrix td.num{font-family:'IBM Plex Mono',monospace;font-size:12.5px}
 <section id="triggers">
   <div class="kicker">02 · Market Signal Dashboard</div>
   <h2>Global Mandate Triggers</h2>
-  <p class="lede">Fifteen trigger conditions from across the modules, ranked by status. <span style="color:var(--teal-bright);font-weight:600">FIRED</span> = the market event has happened and the servicing response is buyable now. <span style="color:var(--gold-bright);font-weight:600">ARMED</span> = conditions are forming; pre-position. <span style="color:var(--muted);font-weight:600">MONITORING</span> = structural, no immediate action.</p>
+  <p class="lede">Sixteen trigger conditions from across the modules, ranked by status. <span style="color:var(--teal-bright);font-weight:600">FIRED</span> = the market event has happened and the servicing response is buyable now. <span style="color:var(--gold-bright);font-weight:600">ARMED</span> = conditions are forming; pre-position. <span style="color:var(--muted);font-weight:600">MONITORING</span> = structural, no immediate action.</p>
   <div class="trig-grid" id="trig-grid"></div>
 </section>
 
@@ -432,6 +432,10 @@ var TRIGGERS=[
   d:'Abakkus approved 28 Aug 2026 for its SIF platform Fokkus (equity, debt, hybrid) and announced it 22 Sep alongside its DRHP — group AUM ₹40,000+ cr, MF book ₹10,000+ cr. First manager committing to the full MF → SIF → PMS → AIF wrapper stack.',
   p:'Cross-wrapper servicing opportunity: one architecture across four regulatory wrappers — flag Abakkus/Fokkus for account development.',
   m:'Abakkus release · SEBI · Sep 2026'},
+ {n:'NEW_CUSTODIAN_ENTRANT',s:'fired',reg:'India',
+  d:'Motilal Oswal Custodial Services received SEBI approval (23 Sep 2026) — safekeeping, settlement, corporate actions and regulatory reporting for AIFs, PMS, MFs, insurers and pension funds; operations from Q4 2026.',
+  p:'Greenfield platform buyer: core custody platform, fund accounting, connectivity and compliance tooling are all bought before the first client lands.',
+  m:'Motilal Oswal release · SEBI · Sep 2026'},
  {n:'ETF_RECORD_FLOWS',s:'fired',reg:'North America',
   d:'US ETF AUM at a record $16.36T (end-Aug 2026) — 52nd consecutive month of net inflows; record $1.41T YTD inflows, 76.5% above the same period of 2025; active ETFs $529.96B YTD.',
   p:'TA + fund-accounting refresh pitched on flow volume; active-ETF servicing is the growth wedge.',
