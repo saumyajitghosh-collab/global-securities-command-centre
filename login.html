@@ -17,15 +17,15 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%}
-body{font-family:'Public Sans',sans-serif;background:var(--ink);color:var(--text);font-size:15px;line-height:1.6;overflow:hidden}
+body{font-family:'Public Sans',sans-serif;background:var(--ink);color:var(--text);font-size:15px;line-height:1.6;overflow-x:hidden}
 #bg{position:fixed;inset:0;z-index:0}
 .glow{position:fixed;border-radius:50%;filter:blur(120px);opacity:.5;z-index:1;pointer-events:none;animation:drift 18s ease-in-out infinite alternate}
 .glow.g1{width:520px;height:520px;background:rgba(192,138,45,.14);top:-160px;left:-120px}
 .glow.g2{width:620px;height:620px;background:rgba(44,122,116,.12);bottom:-220px;right:-160px;animation-delay:-9s}
 @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.12)}}
 
-.stage{position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
-.card{width:100%;max-width:460px;background:rgba(22,40,63,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:18px;padding:38px 36px 30px;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:cardIn .7s cubic-bezier(.2,.8,.2,1)}
+.stage{position:relative;z-index:2;min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:100%;max-width:470px;background:rgba(22,40,63,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:18px;padding:38px 36px 30px;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:cardIn .7s cubic-bezier(.2,.8,.2,1)}
 @keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
 
 .brand{text-align:center;margin-bottom:26px}
@@ -48,7 +48,7 @@ input::placeholder{color:#5B7089}
 .pw-wrap input{padding-right:44px}
 .eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--muted);cursor:pointer;font-size:16px;padding:6px}
 .strength{height:3px;border-radius:2px;background:rgba(255,255,255,.08);margin-top:7px;overflow:hidden}
-.strength i{display:block;height:100%;width:0;background:var(--danger);border-radius:2px;transition:all .3s}
+.strength i{display:block;height:100%;width:0;background:#A3462E;border-radius:2px;transition:all .3s}
 .strength i.mid{background:var(--gold-bright)}
 .strength i.good{background:var(--teal-bright)}
 
@@ -79,6 +79,8 @@ input::placeholder{color:#5B7089}
 .plan .p-price small{font-size:12px;color:var(--muted);font-family:'Public Sans',sans-serif}
 .plan .p-note{font-size:11.5px;color:var(--muted);margin-top:4px}
 .plan .badge{position:absolute;top:-9px;right:12px;background:var(--teal);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;padding:3px 9px;border-radius:4px;text-transform:uppercase}
+.premium-list{background:rgba(44,122,116,.08);border:1px solid rgba(79,179,171,.25);border-radius:10px;padding:12px 16px;margin-top:14px;font-size:12.5px;color:var(--text)}
+.premium-list b{color:var(--teal-bright)}
 .qr-zone{display:flex;gap:20px;align-items:center;background:rgba(14,27,44,.5);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:8px}
 .qr-zone img{width:132px;height:132px;border-radius:10px;background:#fff;padding:8px;flex-shrink:0}
 .qr-zone .qr-side{font-size:12.5px;color:var(--muted);line-height:1.65}
@@ -100,6 +102,19 @@ input::placeholder{color:#5B7089}
 .link-btn{background:none;border:0;color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;cursor:pointer;text-transform:uppercase}
 .link-btn:hover{color:var(--gold-bright)}
 a{color:var(--gold);text-decoration:none}
+
+/* Admin panel */
+.admin-head{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-bright);margin:22px 0 4px}
+.admin-user{background:rgba(14,27,44,.55);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:8px;font-size:12.5px}
+.admin-user .au-top{display:flex;justify-content:space-between;align-items:baseline}
+.admin-user .au-uid{font-weight:700;color:#fff}
+.admin-user .au-meta{color:var(--muted);font-size:11px;margin-top:2px}
+.admin-user .au-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.admin-user .au-actions button{background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em;padding:5px 10px;border-radius:6px;cursor:pointer}
+.admin-user .au-actions button:hover{border-color:var(--gold);color:var(--gold-bright)}
+.admin-user .au-actions button.danger:hover{border-color:rgba(163,70,46,.6);color:#E8A28E}
+.scrollwrap{max-height:280px;overflow-y:auto;padding-right:4px}
+
 @media(max-width:520px){.card{padding:28px 22px 22px}.qr-zone{flex-direction:column;text-align:center}.qr-zone .upi-id{flex-direction:column;gap:4px}}
 </style>
 </head>
@@ -115,7 +130,7 @@ a{color:var(--gold);text-decoration:none}
     <div class="sub">Executive Intelligence · Custody · Fund Services · New Rails</div>
   </div>
 
-  <!-- ============ WELCOME (has valid session) ============ -->
+  <!-- ============ WELCOME ============ -->
   <div class="view" id="v-welcome">
     <div class="msg ok" id="w-status" style="margin:0 0 4px"></div>
     <div class="trial-box" id="w-trial"></div>
@@ -145,6 +160,10 @@ a{color:var(--gold);text-decoration:none}
     <input id="cr-uid" autocomplete="username" placeholder="e.g. j.sharma">
     <label for="cr-email">Email (for account recovery)</label>
     <input id="cr-email" type="email" autocomplete="email" placeholder="you@company.com">
+    <div id="cr-founder-zone" style="display:none">
+      <label for="cr-fkey">Founder key</label>
+      <div class="pw-wrap"><input id="cr-fkey" type="password" placeholder="founder access key" autocomplete="off"><button class="eye" data-eye="cr-fkey" tabindex="-1">👁</button></div>
+    </div>
     <label for="cr-pw">Choose a password</label>
     <div class="pw-wrap"><input id="cr-pw" type="password" autocomplete="new-password" placeholder="minimum 8 characters"><button class="eye" data-eye="cr-pw" tabindex="-1">👁</button></div>
     <div class="strength"><i id="cr-meter"></i></div>
@@ -152,9 +171,9 @@ a{color:var(--gold);text-decoration:none}
     <input id="cr-pw2" type="password" autocomplete="new-password" placeholder="repeat password">
     <div class="msg err" id="cr-msg"></div>
     <div class="trial-box">
-      <div class="tb-head"><span>Your free month starts today</span><span class="tb-days" id="cr-trial">30 days</span></div>
+      <div class="tb-head"><span>Your free month — one per device</span><span class="tb-days" id="cr-trial">30 days</span></div>
       <div class="trial-bar"><i style="width:100%"></i></div>
-      <div class="tb-note">Full access to all regional modules, the Executive View and the weekly intelligence brief. After 30 days, choose a plan that suits you — or walk away, no questions asked.</div>
+      <div class="tb-note">Full access to all regional modules, the Executive View, the Weekly Brief and data exports. The free month is tied to this device — creating another account later does not restart it.</div>
     </div>
     <button class="btn" id="cr-go">Create account & start free month</button>
   </div>
@@ -167,7 +186,7 @@ a{color:var(--gold);text-decoration:none}
       <div class="plan sel" data-plan="monthly" data-price="2999" data-days="30">
         <div class="p-name">Professional · Monthly</div>
         <div class="p-price">₹2,999 <small>/ month</small></div>
-        <div class="p-note">All modules, Executive View, weekly brief. Cancel anytime.</div>
+        <div class="p-note">All modules, Executive View, Weekly Brief, exports. Cancel anytime.</div>
       </div>
       <div class="plan" data-plan="yearly" data-price="29999" data-days="365">
         <div class="badge">2 months free</div>
@@ -181,6 +200,7 @@ a{color:var(--gold);text-decoration:none}
         <div class="p-note">For desks and pursuit teams. Yearly team plan ₹1,19,999 (save 17%).</div>
       </div>
     </div>
+    <div class="premium-list"><b>What the paid tier adds on top of the modules:</b> the <b>Weekly Brief</b> — a premium intelligence edition published every Monday with the week's mandate triggers and the sales angle of the week · <b>CSV data exports</b> of the cross-region matrix and trigger dashboard · <b>priority research requests</b> (two per quarter, answered by email) · early access to new analytical tools as they ship.</div>
     <div class="qr-zone">
       <img src="data:image/png;base64,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" alt="UPI QR code">
       <div class="qr-side">
@@ -215,6 +235,23 @@ a{color:var(--gold);text-decoration:none}
       <button class="btn" id="st-savepw">Save new password</button>
     </div>
     <div class="msg err" id="st-msg2"></div>
+
+    <div id="admin-zone" style="display:none">
+      <div class="admin-head">⚑ Founder · Admin Panel</div>
+      <div class="settings-row"><div class="sr-l">Accounts on this device<small>Grant, extend or revoke access</small></div></div>
+      <div class="scrollwrap" id="admin-users"></div>
+      <div class="settings-row" style="margin-top:10px"><div class="sr-l">Change founder key<small>Required to create new founder accounts</small></div><button class="link-btn" id="ad-chkey">Change</button></div>
+      <div id="ad-chkey-zone" style="display:none;margin-top:6px">
+        <label for="ad-oldkey">Current founder key</label>
+        <input id="ad-oldkey" type="password" autocomplete="off">
+        <label for="ad-newkey">New founder key</label>
+        <input id="ad-newkey" type="password" autocomplete="off">
+        <div class="msg err" id="ad-msg"></div>
+        <button class="btn" id="ad-savekey">Save founder key</button>
+      </div>
+      <div class="msg err" id="ad-msg2"></div>
+    </div>
+
     <div style="display:flex;gap:10px;margin-top:16px">
       <button class="btn ghost" style="margin-top:0" id="st-back">← Back</button>
       <button class="btn ghost" style="margin-top:0;color:#E8A28E;border-color:rgba(163,70,46,.5)" id="st-logout">Sign out</button>
@@ -229,7 +266,7 @@ a{color:var(--gold);text-decoration:none}
 </div>
 
 <script>
-/* ---------- Particle network background ("AI mesh") ---------- */
+/* ---------- Particle network background ---------- */
 (function(){
   var c=document.getElementById('bg'),x=c.getContext('2d'),P=[],W,H,N=Math.min(70,Math.floor(innerWidth/22));
   function rs(){W=c.width=innerWidth;H=c.height=innerHeight}
@@ -248,9 +285,29 @@ a{color:var(--gold);text-decoration:none}
   })();
 })();
 
-/* ---------- Auth core ---------- */
-var LS_USERS='gscc_users', LS_SES='gscc_session', TRIAL_DAYS=30, SES_DAYS=7;
+/* ---------- Constants & helpers ---------- */
+var LS_USERS='gscc_users', LS_SES='gscc_session', LS_PAID='gscc_paid_until', LS_FKEY='gscc_founder_hash';
+var TRIAL_DAYS=30, SES_DAYS=7, DAY=86400000, NEVER=4102444800000;
+var FOUNDER_UID='founder';
+var FOUNDER_KEY_HASH='e50ca085ed0a619d2d0c217bfea036bb4dc5f1f796787829ddfd9202997d2d3b';
 var enc=new TextEncoder();
+
+/* ---------- Device trial marker (localStorage x2 + cookie) ---------- */
+function readM(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}}
+function writeM(ts){var v=JSON.stringify({t:ts});
+  try{localStorage.setItem('gscc_did',v)}catch(e){}
+  try{localStorage.setItem('gscc_anc',v)}catch(e){}
+  try{document.cookie='prefs_v='+encodeURIComponent(v)+';max-age=315360000;path=/;SameSite=Lax'}catch(e){}}
+function cookieM(){try{var m=document.cookie.match(/(?:^|;\s*)prefs_v=([^;]+)/);return m?JSON.parse(decodeURIComponent(m[1])):null}catch(e){return null}}
+function deviceTs(){var a=readM('gscc_did'),b=readM('gscc_anc'),c=cookieM();
+  var t=[a,b,c].filter(function(x){return x&&x.t}).map(function(x){return x.t});
+  if(!t.length){writeM(Date.now());return Date.now()}
+  return Math.min.apply(null,t)}
+function deviceTrialEnd(){return deviceTs()+TRIAL_DAYS*DAY}
+function devicePaidUntil(){return parseInt(localStorage.getItem(LS_PAID)||'0',10)||0}
+function setDevicePaidUntil(ts){var cur=devicePaidUntil();if(ts>cur){try{localStorage.setItem(LS_PAID,String(ts))}catch(e){}}}
+function founderKeyHash(){try{return localStorage.getItem(LS_FKEY)||FOUNDER_KEY_HASH}catch(e){return FOUNDER_KEY_HASH}}
+
 function getUsers(){try{return JSON.parse(localStorage.getItem(LS_USERS)||'{}')}catch(e){return{}}}
 function saveUsers(u){localStorage.setItem(LS_USERS,JSON.stringify(u))}
 function getSes(){try{return JSON.parse(localStorage.getItem(LS_SES)||'null')}catch(e){return null}}
@@ -258,28 +315,37 @@ function salt(){var a=new Uint8Array(16);crypto.getRandomValues(a);return Array.
 function derive(pw,s){return crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveBits']).then(function(k){
   return crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(s),iterations:60000,hash:'SHA-256'},k,256)}).then(function(buf){
   return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('')})}
+function sha256hex(s){return crypto.subtle.digest('SHA-256',enc.encode(s)).then(function(buf){
+  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('')})}
 
 function V(id){return document.getElementById(id)}
 function show(id){['v-welcome','v-signin','v-create','v-payment','v-settings'].forEach(function(v){V(v).classList.toggle('on',v===id)})}
-
 function startSession(uid){
-  var s={uid:uid,loginAt:Date.now(),sessionExpires:Date.now()+SES_DAYS*86400000};
+  var s={uid:uid,loginAt:Date.now(),sessionExpires:Date.now()+SES_DAYS*DAY};
   localStorage.setItem(LS_SES,JSON.stringify(s));
 }
 function accountState(){
   var ses=getSes(),users=getUsers(),now=Date.now();
   if(!ses||!users[ses.uid])return{mode:'anon'};
-  var a=users[ses.uid];
   if(!(ses.sessionExpires>now))return{mode:'anon',known:ses.uid};
-  if(a.planExpires&&a.planExpires>now)return{mode:'active',acct:a,uid:ses.uid,daysLeft:Math.ceil((a.planExpires-now)/86400000)};
+  var a=users[ses.uid];
+  if(a.plan==='owner')return{mode:'active',acct:a,uid:ses.uid,daysLeft:-1,owner:true};
+  var until=Math.max(a.planExpires||0,devicePaidUntil());
+  if(until>now)return{mode:'active',acct:a,uid:ses.uid,daysLeft:Math.ceil((until-now)/DAY)};
   return{mode:'expired',acct:a,uid:ses.uid};
 }
 
 /* ---------- Boot ---------- */
 var st=accountState();
 if(st.mode==='active'){
-  V('w-status').textContent='Welcome back, '+st.uid+'.';
-  V('w-trial').innerHTML='<div class="tb-head"><span>'+(st.acct.plan==='trial'?'Free trial':'Subscription')+'</span><span class="tb-days">'+st.daysLeft+' days left</span></div><div class="trial-bar"><i style="width:'+Math.min(100,Math.round(st.daysLeft/(st.acct.plan==='trial'?TRIAL_DAYS:30)*100))+'%"></i></div><div class="tb-note">'+(st.acct.plan==='trial'?'Your first month is free. When it ends, pick a plan — monthly, yearly (2 months free) or team.':'Renews by UPI. Manage in account settings.')+'</div>';
+  V('w-status').textContent='Welcome back, '+(st.owner?'Founder':st.uid)+'.';
+  if(st.owner){
+    V('w-trial').innerHTML='<div class="tb-head"><span>Founder account</span><span class="tb-days">∞</span></div><div class="trial-bar"><i style="width:100%"></i></div><div class="tb-note">Unlimited access — this account never expires. Admin panel available in account settings.</div>';
+  }else{
+    var dEnd=Math.max(st.acct.planExpires||0,devicePaidUntil());
+    var dLeft=Math.ceil((dEnd-Date.now())/DAY);
+    V('w-trial').innerHTML='<div class="tb-head"><span>'+((st.acct&&st.acct.plan==='trial')?'Free trial (device)':'Subscription')+'</span><span class="tb-days">'+dLeft+' days left</span></div><div class="trial-bar"><i style="width:'+Math.min(100,Math.round(dLeft/((st.acct&&st.acct.plan==='trial')?TRIAL_DAYS:30)*100))+'%"></i></div><div class="tb-note">'+((st.acct&&st.acct.plan==='trial')?'Your first month is free — one free month per device. When it ends, pick a plan.':'Renews by UPI. Manage in account settings.')+'</div>';
+  }
   show('v-welcome');
 }else if(st.mode==='expired'){show('v-payment')}
 else{show('v-signin')}
@@ -301,14 +367,17 @@ V('si-pw').addEventListener('keydown',function(e){if(e.key==='Enter')doSignin()}
 function doSignin(){
   var uid=V('si-uid').value.trim(),pw=V('si-pw').value,users=getUsers(),m=V('si-msg');
   m.className='msg';if(!uid||!pw){m.className='msg err';m.textContent='Enter your user ID and password.';return}
-  if(!users[uid]){m.className='msg err';m.textContent='No account found for that user ID. Create one below — first month free.';return}
+  if(!users[uid]){m.className='msg err';m.textContent='No account found for that user ID on this device. Create one below — first month free.';return}
   derive(pw,users[uid].salt).then(function(h){
-    if(h!==users[uid].hash){m.className='msg err';m.textContent='Incorrect password. Try again or reset it via account recovery.';return}
+    if(h!==users[uid].hash){m.className='msg err';m.textContent='Incorrect password. Try again.';return}
     startSession(uid);location.href='index.html';
   });
 }
 
 /* ---------- Create ---------- */
+V('cr-uid').addEventListener('input',function(){
+  V('cr-founder-zone').style.display=(this.value.trim().toLowerCase()===FOUNDER_UID)?'block':'none';
+});
 V('cr-pw').addEventListener('input',function(){
   var v=this.value,s=0;if(v.length>=8)s++;if(/[A-Z]/.test(v)&&/[a-z]/.test(v))s++;if(/\d/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
   var el=V('cr-meter');el.style.width=(v.length?Math.max(12,s*25):0)+'%';el.className=s>=3?'good':(s===2?'mid':'');
@@ -316,6 +385,7 @@ V('cr-pw').addEventListener('input',function(){
 V('cr-go').onclick=doCreate;
 function doCreate(){
   var uid=V('cr-uid').value.trim().toLowerCase(),em=V('cr-email').value.trim(),p1=V('cr-pw').value,p2=V('cr-pw2').value,m=V('cr-msg');
+  var isFounder=(uid===FOUNDER_UID);
   m.className='msg';
   if(!/^[a-z0-9._-]{3,24}$/.test(uid)){m.className='msg err';m.textContent='User ID: 3–24 chars, letters/numbers/dot/dash/underscore.';return}
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){m.className='msg err';m.textContent='Enter a valid email — it is your recovery path.';return}
@@ -323,9 +393,21 @@ function doCreate(){
   if(p1!==p2){m.className='msg err';m.textContent='Passwords do not match.';return}
   var users=getUsers();
   if(users[uid]){m.className='msg err';m.textContent='That user ID is taken on this device. Pick another.';return}
-  var s=salt();
+  var s=salt(),trialEnd=deviceTrialEnd();
+  if(isFounder){
+    var fk=V('cr-fkey').value;
+    if(!fk){m.className='msg err';m.textContent='Founder key required for this user ID.';return}
+    sha256hex(fk).then(function(fh){
+      if(fh!==founderKeyHash()){m.className='msg err';m.textContent='Founder key incorrect.';return}
+      return derive(p1,s).then(function(h){
+        users[uid]={salt:s,hash:h,email:em,created:Date.now(),plan:'owner',planExpires:NEVER};
+        saveUsers(users);startSession(uid);location.href='index.html';
+      });
+    });
+    return;
+  }
   derive(p1,s).then(function(h){
-    users[uid]={salt:s,hash:h,email:em,created:Date.now(),plan:'trial',planExpires:Date.now()+TRIAL_DAYS*86400000};
+    users[uid]={salt:s,hash:h,email:em,created:Date.now(),plan:'trial',planExpires:trialEnd};
     saveUsers(users);startSession(uid);location.href='index.html';
   });
 }
@@ -333,11 +415,15 @@ function doCreate(){
 /* ---------- Welcome view ---------- */
 V('w-enter').onclick=function(){location.href='executive-view.html'};
 V('w-logout').onclick=V('st-logout').onclick=function(){localStorage.removeItem(LS_SES);location.reload()};
-V('w-settings').onclick=function(){
+V('w-settings').onclick=renderSettings;
+function renderSettings(){
   var s=accountState();V('st-uid').textContent=s.uid;
-  V('st-plan').textContent=(s.acct&&s.acct.plan==='trial'?'Free trial month':(s.acct&&s.acct.plan==='yearly'?'Yearly — Professional':'Monthly — Professional'));
-  V('st-days').textContent=(s.daysLeft||0)+' days';show('v-settings');
-};
+  V('st-plan').textContent=(s.owner?'Founder — unlimited access':((s.acct&&s.acct.plan==='trial')?'Free trial month (device)':((s.acct&&s.acct.plan==='yearly')?'Yearly — Professional':(s.acct&&s.acct.plan==='team'?'Team':'Monthly — Professional'))));
+  V('st-days').textContent=(s.owner?'∞':((s.daysLeft||0)+' days'));
+  V('admin-zone').style.display=(s.owner?'block':'none');
+  if(s.owner)renderAdmin();
+  show('v-settings');
+}
 V('st-back').onclick=function(){location.reload()};
 
 /* ---------- Payment ---------- */
@@ -353,10 +439,11 @@ V('pay-go').onclick=function(){
   if(!/^[0-9]{9,22}$/.test(ref)){m.className='msg err';m.textContent='Enter the numeric UPI reference (UTR) from your payment app — 9 to 22 digits.';return}
   var st=accountState();if(st.mode==='anon'){show('v-signin');return}
   var sel=document.querySelector('.plan.sel'),days=parseInt(sel.getAttribute('data-days'),10),plan=sel.getAttribute('data-plan');
-  var users=getUsers();users[st.uid].plan=plan;users[st.uid].planExpires=Date.now()+days*86400000;users[st.uid].txnRef=ref;users[st.uid].txnAt=Date.now();
-  saveUsers(users);startSession(st.uid);
+  var users=getUsers(),a=users[st.uid];
+  a.plan=plan;a.planExpires=Date.now()+days*DAY;a.txnRef=ref;a.txnAt=Date.now();
+  saveUsers(users);setDevicePaidUntil(a.planExpires);startSession(st.uid);
   V('pay-note').textContent='Subscription active. Reference '+ref+' recorded — thank you.';
-  setTimeout(function(){location.href='executive-view.html'},900);
+  setTimeout(function(){location.href='weekly-brief.html'},900);
 };
 
 /* ---------- Password change ---------- */
@@ -374,7 +461,45 @@ V('st-savepw').onclick=function(){
   });
 };
 
-/* ---------- Eye toggles + copy ---------- */
+/* ---------- Founder admin panel ---------- */
+function renderAdmin(){
+  var users=getUsers(),now=Date.now(),box=V('admin-users');
+  var uids=Object.keys(users).sort();
+  if(!uids.length){box.innerHTML='<div class="admin-user">No accounts on this device yet.</div>';return}
+  box.innerHTML=uids.map(function(uid){
+    var a=users[uid],d=0;
+    if(a.plan==='owner'){d='∞'}
+    else{var u=Math.max(a.planExpires||0,devicePaidUntil());d=Math.max(0,Math.ceil((u-now)/DAY))+'d'}
+    var pl=a.plan==='owner'?'FOUNDER':((a.plan||'trial').toUpperCase());
+    return '<div class="admin-user"><div class="au-top"><span class="au-uid">'+uid+'</span><span class="au-meta">'+pl+'</span></div>'+
+      '<div class="au-meta">'+(a.email||'no email')+' · '+(d==='∞'?'unlimited':d+' left')+(a.txnRef?' · txn '+a.txnRef:'')+'</div>'+
+      '<div class="au-actions">'+
+      '<button data-uid="'+uid+'" data-act="30">+30d</button>'+
+      '<button data-uid="'+uid+'" data-act="365">+365d</button>'+
+      '<button data-uid="'+uid+'" data-act="revoke">Revoke</button>'+
+      '</div></div>';
+  }).join('');
+  box.querySelectorAll('button').forEach(function(b){
+    b.onclick=function(){
+      var uid=b.getAttribute('data-uid'),act=b.getAttribute('act'),users=getUsers(),a=users[uid];
+      if(!a)return;
+      if(act==='revoke'){a.planExpires=0;a.plan=a.plan==='owner'?'owner':'lapsed'}
+      else{var days=parseInt(act,10);var base=Math.max(a.planExpires||0,Date.now());a.planExpires=base+days*DAY;if(a.plan==='trial'||a.plan==='lapsed')a.plan='monthly';setDevicePaidUntil(a.planExpires)}
+      saveUsers(users);renderAdmin();
+    };
+  });
+}
+V('ad-chkey').onclick=function(){var z=V('ad-chkey-zone');z.style.display=z.style.display==='none'?'block':'none'};
+V('ad-savekey').onclick=function(){
+  var ok=V('ad-oldkey').value,nk=V('ad-newkey').value,m=V('ad-msg');m.className='msg';
+  if(!nk||nk.length<8){m.className='msg err';m.textContent='New founder key must be at least 8 characters.';return}
+  sha256hex(ok).then(function(h){
+    if(h!==founderKeyHash()){m.className='msg err';m.textContent='Current founder key is incorrect.';return}
+    return sha256hex(nk).then(function(nh){localStorage.setItem(LS_FKEY,nh);m.className='msg ok';m.textContent='Founder key updated.';V('ad-oldkey').value='';V('ad-newkey').value='';});
+  });
+};
+
+/* ---------- Eye toggles ---------- */
 document.querySelectorAll('.eye').forEach(function(b){b.onclick=function(){var i=V(b.getAttribute('data-eye'));i.type=i.type==='password'?'text':'password'}});
 </script>
 </body>
