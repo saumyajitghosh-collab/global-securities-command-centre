@@ -1,0 +1,18 @@
+name: Apply Sep 24 data update
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run data patch script
+        run: python3 apply-sep24-update.py
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "No changes needed"; else git commit -m "Data refresh Sep 24: Abakkus/Fokkus SIF entry, NEW_SIF_MANAGER trigger, SIF segment thesis upgrade"; git push; fi
