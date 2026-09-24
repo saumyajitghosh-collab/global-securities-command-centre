@@ -1,0 +1,18 @@
+name: Apply premium tier update
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run premium patch script
+        run: python3 apply-premium-update.py
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "No changes needed"; else git commit -m "Premium tier: Executive View CSV exports + Weekly Brief links, index pricing copy"; git push; fi
