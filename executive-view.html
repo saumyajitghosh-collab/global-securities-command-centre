@@ -211,7 +211,7 @@ table.matrix td.num{font-family:'IBM Plex Mono',monospace;font-size:12.5px}
 <section id="triggers">
   <div class="kicker">02 · Market Signal Dashboard</div>
   <h2>Global Mandate Triggers</h2>
-  <p class="lede">Fourteen trigger conditions from across the modules, ranked by status. <span style="color:var(--teal-bright);font-weight:600">FIRED</span> = the market event has happened and the servicing response is buyable now. <span style="color:var(--gold-bright);font-weight:600">ARMED</span> = conditions are forming; pre-position. <span style="color:var(--muted);font-weight:600">MONITORING</span> = structural, no immediate action.</p>
+  <p class="lede">Fifteen trigger conditions from across the modules, ranked by status. <span style="color:var(--teal-bright);font-weight:600">FIRED</span> = the market event has happened and the servicing response is buyable now. <span style="color:var(--gold-bright);font-weight:600">ARMED</span> = conditions are forming; pre-position. <span style="color:var(--muted);font-weight:600">MONITORING</span> = structural, no immediate action.</p>
   <div class="trig-grid" id="trig-grid"></div>
 </section>
 
@@ -241,7 +241,7 @@ table.matrix td.num{font-family:'IBM Plex Mono',monospace;font-size:12.5px}
       <div>
         <h3><span class="phnum">01</span>Prove — India beachhead</h3>
         <ul>
-          <li>Launch the <b>SIF derivatives-servicing proposition</b> — the ₹31,175 cr pool doubled in three months; AMC SIF franchises need collateral, margin, derivatives lifecycle and exposure monitoring from day one.</li>
+          <li>Launch the <b>SIF derivatives-servicing proposition</b> — the ₹31,175 cr pool doubled in three months; AMC SIF franchises need collateral, margin, derivatives lifecycle and exposure monitoring from day one. First named account-development target: Abakkus/Fokkus — the first full cross-wrapper SIF manager (Sep 2026).</li>
           <li>Pilot the <b>India Alternatives Stack</b> with 3–5 AIF GPs: admin + TA + custody bundled (₹16.94 lakh cr commitments growing ~25–30%/yr).</li>
           <li>Position the <b>GIFT City launch kit</b> for global AMCs eyeing the IFSC route.</li>
         </ul>
@@ -297,7 +297,7 @@ table.matrix td.num{font-family:'IBM Plex Mono',monospace;font-size:12.5px}
 
   <details class="qa card" open><summary>Where is the nearest $50M-servicing-revenue pool?</summary><div class="ans">Not the headline AUC/A numbers — those are contested by four $40T+ incumbents. The near pools are <b>India alternatives</b> (₹16.94 lakh cr AIF commitments +25.6% YoY, with SIF assets doubling to ₹31,175 cr in three months), <b>US private capital admin</b> ($7.7T and the fastest-growing segment), and <b>Saudi fund administration</b> ($250B→$350B where 100% of custodians report capacity gaps). Each is growing faster than the incumbent infrastructure around it. <span class="tag fact">FACT</span> on the sizes; <span class="tag assess">ASSESSMENT</span> on revenue conversion.</div></details>
 
-  <details class="qa card"><summary>What is the fastest path to a reference win?</summary><div class="ans">India, months 1–2: the SIF trigger has just fired and the proposition — derivatives + collateral + fund accounting for SIF franchises — has no incumbent answer because the category is three months old at scale. A single AMC SIF mandate is a bankable reference for the entire derivatives-servicing stack. <span class="tag assess">ASSESSMENT</span> anchored to <span class="tag fact">FACT</span> (AMFI Aug 2026 data)</div></details>
+  <details class="qa card"><summary>What is the fastest path to a reference win?</summary><div class="ans">India, months 1–2: the SIF trigger has just fired and the proposition — derivatives + collateral + fund accounting for SIF franchises — has no incumbent answer because the category is three months old at scale. A single AMC SIF mandate is a bankable reference for the entire derivatives-servicing stack — and the archetype target is already visible: Abakkus/Fokkus, a listing-bound manager building the four-wrapper stack (MF → SIF → PMS → AIF) from scratch. <span class="tag assess">ASSESSMENT</span> anchored to <span class="tag fact">FACT</span> (AMFI Aug 2026 data)</div></details>
 
   <details class="qa card"><summary>Which single regulatory date matters most?</summary><div class="ans"><b>DORA enforcement in Europe</b> (live since Jan 2025, escalating) and <b>AIFMD II delegated-administration requirements</b> (Apr 2026): both force every fund-services buyer in Europe to review provider arrangements — a mandatory re-papering conversation. In North America, the pending <b>SEC custody/safeguarding rule</b> is the armed trigger: when it lands, every qualified-custodian conversation reopens. <span class="tag fact">FACT</span></div></details>
 
@@ -415,9 +415,13 @@ recompute();
 /* ===== Triggers ===== */
 var TRIGGERS=[
  {n:'SIF_SCALE_ACCELERATION',s:'fired',reg:'India',
-  d:'SIF net assets ₹31,175 cr in Aug 2026 — more than doubled from ₹13,814 cr in May. ₹7,699 cr net inflows in one month; folios 94k → 125k+.',
+  d:'SIF net assets ₹31,175 cr in Aug 2026 (+35% MoM) — more than doubled from ₹13,814 cr in May. ₹7,699 cr net inflows in one month; folios 94k → 125k+.',
   p:'Derivatives / collateral / fund-accounting servicing review at every AMC launching a SIF franchise.',
   m:'AMFI monthly SIF data · Aug 2026'},
+ {n:'NEW_SIF_MANAGER',s:'fired',reg:'India',
+  d:'Abakkus approved 28 Aug 2026 for its SIF platform Fokkus (equity, debt, hybrid) and announced it 22 Sep alongside its DRHP — group AUM ₹40,000+ cr, MF book ₹10,000+ cr. First manager committing to the full MF → SIF → PMS → AIF wrapper stack.',
+  p:'Cross-wrapper servicing opportunity: one architecture across four regulatory wrappers — flag Abakkus/Fokkus for account development.',
+  m:'Abakkus release · SEBI · Sep 2026'},
  {n:'ETF_RECORD_FLOWS',s:'fired',reg:'North America',
   d:'US ETF AUM at a record $16.36T (end-Aug 2026) — 52nd consecutive month of net inflows; record $1.41T YTD inflows, 76.5% above the same period of 2025; active ETFs $529.96B YTD.',
   p:'TA + fund-accounting refresh pitched on flow volume; active-ETF servicing is the growth wedge.',
