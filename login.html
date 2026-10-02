@@ -248,8 +248,9 @@ a{color:var(--gold);text-decoration:none}
     <div class="intl-zone">
       <div class="intl-head">Pay by card or netbanking <span class="intl-tag">Razorpay · Worldwide</span></div>
       <div class="intl-body">UPI is India-only — for everyone else, Razorpay handles Indian and international cards, netbanking and wallets through a secure hosted checkout. Select your plan above, then continue below; you receive a receipt by email.</div>
-      <button class="btn ghost" id="intl-pay" style="margin-top:12px;border-color:rgba(157,140,214,.5)">Continue to secure checkout →</button>
-      <div class="tb-note" style="margin-top:8px">The amount follows the plan you selected above. International cards require Razorpay's international-payments facility to be active on the merchant account.</div>
+      <button class="btn ghost" id="intl-pay" style="margin-top:12px;border-color:rgba(157,140,214,.5)">Continue to Razorpay checkout →</button>
+      <div class="tb-note" style="margin-top:8px" id="intl-amt">Amount to pay: <b>select a plan above</b> — then enter it on the Razorpay page.</div>
+      <div class="tb-note" style="margin-top:4px">Razorpay opens in a new tab — enter the amount shown and pay by card or netbanking, then paste the payment ID below. International cards require Razorpay's international-payments facility to be active on the account.</div>
     </div>
     <label for="pay-ref">Payment reference (UPI UTR or card receipt no.)</label>
     <input id="pay-ref" placeholder="UPI UTR, or Razorpay / card payment ID">
@@ -500,7 +501,7 @@ V('st-back').onclick=function(){location.reload()};
 
 /* ---------- Payment ---------- */
 document.querySelectorAll('.plan').forEach(function(p){
-  p.onclick=function(){document.querySelectorAll('.plan').forEach(function(q){q.classList.remove('sel')});p.classList.add('sel')};
+  p.onclick=function(){document.querySelectorAll('.plan').forEach(function(q){q.classList.remove('sel')});p.classList.add('sel');updateIntlAmt()};
 });
 V('upi-open').onclick=function(){
   var sel=document.querySelector('.plan.sel'),am=sel?sel.getAttribute('data-price'):'';
@@ -516,18 +517,27 @@ V('upi-open').onclick=function(){
    empty and the email fallback handles it.
    While a plan's link is empty, the button falls back to a pre-filled email
    so you can send the buyer a secure Razorpay link by hand. */
-var RAZORPAY_LINKS={monthly:'',yearly:'',team:'',modular:''};
-V('intl-pay').onclick=function(e){
+var RAZORPAY_LINK='https://razorpay.me/@saumyajitghosh8959';
+function planAmount(){
   var sel=document.querySelector('.plan.sel');
   var plan=sel?sel.getAttribute('data-plan'):'monthly';
-  var amt=sel?sel.getAttribute('data-price'):'2999';
-  if(sel&&plan==='modular'){var mkp2=(getPrefs().markets||MARKETS);amt=String(999*Math.max(1,mkp2.length));}
-  var link=RAZORPAY_LINKS[plan]||'';
-  if(link){window.open(link,'_blank','noopener');return}
+  var amt=sel?parseInt(sel.getAttribute('data-price'),10):2999;
+  if(sel&&plan==='modular'){var mkp2=(getPrefs().markets||MARKETS);amt=999*Math.max(1,mkp2.length);}
+  return {plan:plan,amt:amt};
+}
+function updateIntlAmt(){
+  var el=V('intl-amt');if(!el)return;
+  var p=planAmount();
+  var names={monthly:'Professional · Monthly',yearly:'Professional · Yearly',team:'Team · 5 seats',modular:'Modular'};
+  el.innerHTML='Amount to pay: <b>₹'+p.amt.toLocaleString('en-IN')+'</b> · '+(names[p.plan]||p.plan)+' — enter this on the Razorpay page.';
+}
+V('intl-pay').onclick=function(e){
+  var p=planAmount();
+  if(RAZORPAY_LINK){updateIntlAmt();window.open(RAZORPAY_LINK,'_blank','noopener');return}
   e.preventDefault();
-  var usd=Math.round(parseInt(amt,10)/83);
-  var subj='GSCC subscription — Razorpay payment ('+plan+')';
-  var body='I would like to pay by card/netbanking via Razorpay.\n\nPlan: '+plan+'\nAmount: INR '+amt+' (~USD '+usd+')\nCountry: \nName: \n\nPlease send me a secure Razorpay payment link.';
+  var usd=Math.round(p.amt/83);
+  var subj='GSCC subscription — Razorpay payment ('+p.plan+')';
+  var body='I would like to pay by card/netbanking via Razorpay.\n\nPlan: '+p.plan+'\nAmount: INR '+p.amt+' (~USD '+usd+')\nCountry: \nName: \n';
   location.href='mailto:saumyajit.ghosh@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
 };
 V('pay-go').onclick=function(){
