@@ -137,6 +137,13 @@ a{color:var(--gold);text-decoration:none}
 .research-menu a{background:rgba(14,27,44,.55);border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:12.5px;color:var(--text);text-decoration:none;transition:all .15s}
 .research-menu a:hover{border-color:var(--gold);color:var(--gold-bright)}
 
+/* International payment */
+.intl-zone{background:rgba(91,74,138,.1);border:1px solid rgba(157,140,214,.3);border-radius:12px;padding:16px 18px;margin-top:10px}
+.intl-head{font-family:'Fraunces',serif;font-size:16px;color:#fff;margin-bottom:4px}
+.intl-body{font-size:12.5px;color:var(--muted);line-height:1.6}
+.intl-zone .btn{margin-top:12px}
+.intl-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:rgba(157,140,214,.2);color:var(--violet-bright,#9C8CD6);border-radius:4px;padding:2px 7px;margin-left:6px;vertical-align:2px}
+
 @media(max-width:520px){.card{padding:28px 22px 22px}.qr-zone{flex-direction:column;text-align:center}.qr-zone .upi-id{flex-direction:column;gap:4px}}
 </style>
 </head>
@@ -238,8 +245,13 @@ a{color:var(--gold);text-decoration:none}
         <span style="font-size:11px">Amount: as per the plan you select above.</span>
       </div>
     </div>
-    <label for="pay-ref">UPI transaction reference (UTR / confirmation no.)</label>
-    <input id="pay-ref" placeholder="12-digit UPI reference from your payment app">
+    <div class="intl-zone">
+      <div class="intl-head">Paying from outside India? <span class="intl-tag">Card · Worldwide</span></div>
+      <div class="intl-body">UPI is India-only. International subscribers pay by card — Visa, Mastercard, Amex, Apple&nbsp;Pay and Google&nbsp;Pay — through a secure hosted checkout. Select your plan above, then continue below; you receive a receipt by email.</div>
+      <button class="btn ghost" id="intl-pay" style="margin-top:12px;border-color:rgba(157,140,214,.5)">Continue to card payment →</button>
+    </div>
+    <label for="pay-ref">Payment reference (UPI UTR or card receipt no.)</label>
+    <input id="pay-ref" placeholder="UPI reference, or card receipt / transaction ID">
     <div class="msg err" id="pay-msg"></div>
     <button class="btn" id="pay-go">I have paid — activate my subscription</button>
     <div class="foot">Access is activated immediately on submission and stays provisional until the reference is verified. Terms: single-user licence, research use. <b>Support: reply to your welcome brief.</b></div>
@@ -494,9 +506,27 @@ V('upi-open').onclick=function(){
   if(sel&&sel.getAttribute('data-plan')==='modular'){var mkp=(getPrefs().markets||MARKETS);am=String(999*Math.max(1,mkp.length));}
   location.href='upi://pay?pa=9836296103@upi&pn=Global%20Securities%20Command%20Centre'+(am?'&am='+am:'')+'&cu=INR';
 };
+/* ---- International card payment ----
+   Paste your hosted-checkout URL below (Stripe Payment Link, Lemon Squeezy,
+   Paddle or Gumroad). The button then opens it in a new tab.
+   While empty, the button falls back to a pre-filled email so you can send
+   the buyer a secure payment link by hand. */
+var INTL_PAY_LINK='';
+V('intl-pay').onclick=function(e){
+  var sel=document.querySelector('.plan.sel');
+  var plan=sel?sel.getAttribute('data-plan'):'monthly';
+  var amt=sel?sel.getAttribute('data-price'):'2999';
+  if(sel&&plan==='modular'){var mkp2=(getPrefs().markets||MARKETS);amt=String(999*Math.max(1,mkp2.length));}
+  if(INTL_PAY_LINK){window.open(INTL_PAY_LINK,'_blank','noopener');return}
+  e.preventDefault();
+  var usd=Math.round(parseInt(amt,10)/83);
+  var subj='GSCC subscription — card payment ('+plan+')';
+  var body='I would like to pay by card.\n\nPlan: '+plan+'\nAmount: INR '+amt+' (~USD '+usd+')\nCountry: \nName: \n\nPlease send me a secure card payment link.';
+  location.href='mailto:saumyajit.ghosh@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+};
 V('pay-go').onclick=function(){
   var ref=V('pay-ref').value.trim(),m=V('pay-msg');m.className='msg';
-  if(!/^[0-9]{9,22}$/.test(ref)){m.className='msg err';m.textContent='Enter the numeric UPI reference (UTR) from your payment app — 9 to 22 digits.';return}
+  if(!/^[A-Za-z0-9_\-]{6,40}$/.test(ref)){m.className='msg err';m.textContent='Enter your payment reference — the UPI UTR (digits) or the card receipt / transaction ID (6–40 characters).';return}
   var st=accountState();if(st.mode==='anon'){show('v-signin');return}
   var sel=document.querySelector('.plan.sel'),days=parseInt(sel.getAttribute('data-days'),10)||30,plan=sel.getAttribute('data-plan');
   if(plan==='modular'){days=30;}
