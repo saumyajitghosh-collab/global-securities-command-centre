@@ -212,7 +212,7 @@ table.matrix td.num{font-family:'IBM Plex Mono',monospace;font-size:12.5px}
 <section id="triggers">
   <div class="kicker">02 · Market Signal Dashboard</div>
   <h2>Global Mandate Triggers</h2>
-  <p class="lede">Sixteen trigger conditions from across the modules, ranked by status. <span style="color:var(--teal-bright);font-weight:600">FIRED</span> = the market event has happened and the servicing response is buyable now. <span style="color:var(--gold-bright);font-weight:600">ARMED</span> = conditions are forming; pre-position. <span style="color:var(--muted);font-weight:600">MONITORING</span> = structural, no immediate action.</p>
+  <p class="lede">Twenty trigger conditions from across the modules, ranked by status. <span style="color:var(--teal-bright);font-weight:600">FIRED</span> = the market event has happened and the servicing response is buyable now. <span style="color:var(--gold-bright);font-weight:600">ARMED</span> = conditions are forming; pre-position. <span style="color:var(--muted);font-weight:600">MONITORING</span> = structural, no immediate action.</p>
   <div class="trig-grid" id="trig-grid"></div>
 </section>
 
@@ -476,10 +476,10 @@ var TRIGGERS=[
   d:'AIFMD II liquidity-portfolio-data and delegated-administration requirements from Apr 2026 — re-papering across LP relationships.',
   p:'Delegated-administration and data-servicing offers timed to the deadline.',
   m:'ESMA · module EU'},
- {n:'SEC_CUSTODY_RULE',s:'armed',reg:'North America',
-  d:'Crypto-specific custody amendments at OIRA review since 25 Aug 2026; formal proposal targeted Oct 2026. When it lands, every qualified-custodian conversation reopens.',
-  p:'Pre-positioned safeguarding-infrastructure proposition, ready on rule publication.',
-  m:'SEC rulemaking agenda'},
+ {n:'SEC_CUSTODY_RULE',s:'fired',reg:'North America',
+  d:'SEC proposed a sweeping custody-rule rewrite on 1 Oct 2026 (Rel. IA-7023 / IC-36353): adviser self-custody of crypto where no qualified custodian exists (with guardrails), state-chartered trust companies added as permitted crypto custodians, updated broker-dealer custodian use by funds, and carve-outs for authorised discretionary trading and standing letters of authorisation. Reopens the qualified-custodian definition and the asset-segregation mechanics behind every custody pitch.',
+  p:'Safeguarding-infrastructure and qualified-custodian proposition — the definition is being redrawn now; lead with segregation, reconciliation and governance.',
+  m:'SEC Release IA-7023 / IC-36353 · 1 Oct 2026'},
  {n:'PIF_INTERNATIONALISATION',s:'mon',reg:'Middle East',
   d:'PIF at $925B and building international operations — eventual cross-border servicing at sovereign scale.',
   p:'Track and build relationships; respond when mandates move.',
@@ -487,7 +487,23 @@ var TRIGGERS=[
  {n:'T_PLUS_ONE_AFTERMATH',s:'mon',reg:'Global',
   d:'T+1 live in NA; APAC markets phasing — settlement-ops complexity still rippling through middle offices.',
   p:'Settlement-ops and reconciliation review where volumes spiked.',
-  m:'SIFMA · modules'}
+  m:'SIFMA · modules'},
+ {n:'TOKENIZED_STRATEGIES',s:'fired',reg:'New Rails',
+  d:'Tokenisation shifted from single assets to whole strategies: BlackRock–Ondo put three model portfolios onchain as single tokens (3–4 Oct 2026); WisdomTree consolidated its tokenised funds under "WisdomTree Onchain" (~$1.2bn, 29 Sep); Centrifuge launched three tokenised Treasury/credit funds on Arc (4 Oct).',
+  p:'"One platform, both books" — reconcile onchain tokens with authoritative offchain books: digital TA, NAV validation, segregation. Lead with governance, not chain novelty.',
+  m:'BlackRock–Ondo · WisdomTree · Centrifuge · Oct 2026'},
+ {n:'CSD_ONCHAIN_RAILS',s:'fired',reg:'New Rails',
+  d:"Brazil's CSD went live with Ripple on the XRP Ledger, mirroring BTG Pactual fund shares (29 Sep 2026) — a licensed depository operating live records on a public chain.",
+  p:'Custodians and TAs must now hold both onchain and offchain books of record; CSD-on-public-chain capability becomes a differentiator.',
+  m:'Ripple · CSD BR · Sep 2026'},
+ {n:'RIA_CUSTODY_REENTRY',s:'fired',reg:'North America',
+  d:'State Street launched "State Street Wealth Services" (3–4 Oct 2026), targeting RIAs with $1bn+ via a partnership with Apex Fintech — re-entering a US wealth segment it had stepped back from.',
+  p:'Wealth/RIA servicing and platform-distribution land-grab; incumbent re-entry reshapes the RIA competitive map.',
+  m:'State Street · Apex Fintech · Oct 2026'},
+ {n:'HKEX_IFP_TA',s:'fired',reg:'APAC',
+  d:"State Street named Wellington Management's transfer agent on HKEX's Integrated Fund Platform (29 Sep 2026), executing Wellington's first IFP subscription/redemption and remaining the platform's only global TA.",
+  p:'HKEX IFP is becoming the distribution rail for cross-border funds into China; TA-of-record on the platform is a position to contest or partner on now.',
+  m:'HKEX · State Street · Sep 2026'}
 ];
 var grid=document.getElementById('trig-grid');
 grid.innerHTML=TRIGGERS.map(function(t){
