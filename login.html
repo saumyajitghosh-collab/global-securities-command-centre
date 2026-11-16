@@ -408,7 +408,7 @@ function accountState(){
 
 /* ---------- Boot ---------- */
 var st=accountState();
-applyTheme(getPrefs().theme);
+try{applyTheme(getPrefs().theme)}catch(e){} /* THEMES is declared further down; guard the boot call */
 if(st.mode==='active'){
   V('w-status').textContent='Welcome back, '+(st.owner?'Founder':st.uid)+'.';
   if(st.owner){
@@ -422,6 +422,7 @@ if(st.mode==='active'){
 }else if(st.mode==='expired'){show('v-payment')}
 else{show('v-signin')}
 if(location.hash==='#payment'&&st.mode!=='active'){show('v-payment')}
+if(location.hash==='#create'&&st.mode!=='active'){tabTo('create')}
 if(location.hash==='#configure'&&st.mode==='active'){renderConfigure()}
 
 /* ---------- Tabs / view links ---------- */
@@ -474,14 +475,14 @@ function doCreate(){
       if(fh!==founderKeyHash()){m.className='msg err';m.textContent='Founder key incorrect.';return}
       return derive(p1,s).then(function(h){
         users[uid]={salt:s,hash:h,email:em,created:Date.now(),plan:'owner',planExpires:NEVER};
-        saveUsers(users);startSession(uid);location.href='login.html#configure';
+        saveUsers(users);startSession(uid);location.hash='#configure';renderConfigure();
       });
     });
     return;
   }
   derive(p1,s).then(function(h){
     users[uid]={salt:s,hash:h,email:em,created:Date.now(),plan:'trial',planExpires:trialEnd};
-    saveUsers(users);startSession(uid);location.href='login.html#configure';
+    saveUsers(users);startSession(uid);location.hash='#configure';renderConfigure();
   });
 }
 
@@ -615,7 +616,7 @@ var THEMES={classic:['#C08A2D','#E3B45C'],teal:['#2C7A74','#4FB3AB'],violet:['#5
 var TRIGNAMES=['SIF_SCALE_ACCELERATION','NEW_SIF_MANAGER','NEW_CUSTODIAN_ENTRANT','ETF_RECORD_FLOWS','ADGM_GROWTH_SURGE','QFI_REMOVAL_COMPLETED','HSBC_EU_CUSTODY_EXIT','JAPAN_RECORD_AUM','AI_COST_CURVE_RESET','KINEXYS_SCALE','REC_TOKENISED_BOND','DORA_ENFORCEMENT','AIFMD_II_LPD','SEC_CUSTODY_RULE','PIF_INTERNATIONALISATION','T_PLUS_ONE_AFTERMATH'];
 function getPrefs(){try{var p=JSON.parse(localStorage.getItem('gscc_prefs')||'null');return p||{}}catch(e){return{}}}
 function savePrefs(p){localStorage.setItem('gscc_prefs',JSON.stringify(p))}
-function applyTheme(t){var th=THEMES[t]||THEMES.classic;document.documentElement.style.setProperty('--gold',th[0]);document.documentElement.style.setProperty('--gold-bright',th[1])}
+function applyTheme(t){var T=(typeof THEMES==='object'&&THEMES)||{classic:['#C08A2D','#E3B45C']};var th=T[t]||T.classic||['#C08A2D','#E3B45C'];document.documentElement.style.setProperty('--gold',th[0]);document.documentElement.style.setProperty('--gold-bright',th[1])}
 function updTotal(){
   var n=V('mk-grid').querySelectorAll('input:checked').length;
   V('cfg-total').innerHTML='Modular price: <b>₹'+(n===0?0:n*999).toLocaleString('en-IN')+'/month</b> for '+n+' market'+(n===1?'':'s')+' · Professional (all markets + Executive View): <b>₹2,999/month</b>'+(n>2?' — better value':'');
